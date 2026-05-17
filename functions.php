@@ -1,0 +1,484 @@
+<?php
+/**
+ * Skeleton WP Theme Functions
+ *
+ * @package Skeleton_WP
+ * @version 1.0.0
+ */
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+/* =====================================================
+   THEME SETUP
+   ===================================================== */
+
+if ( ! function_exists( 'skeleton_wp_setup' ) ) :
+function skeleton_wp_setup() {
+
+    // Make theme available for translation
+    load_theme_textdomain( 'skeleton-wp', get_template_directory() . '/languages' );
+
+    // Add default posts and comments RSS feed links to head
+    add_theme_support( 'automatic-feed-links' );
+
+    // Let WordPress manage the document title
+    add_theme_support( 'title-tag' );
+
+    // Enable support for Post Thumbnails
+    add_theme_support( 'post-thumbnails' );
+
+    // Custom image sizes
+    add_image_size( 'skeleton-card',     400, 230, true );  // Post card thumbnail
+    add_image_size( 'skeleton-slide',   1200, 500, true );  // Slider image
+    add_image_size( 'skeleton-sidebar',  300, 180, true );  // Sidebar recent posts
+    add_image_size( 'skeleton-single',  1200, 600, true );  // Single post hero
+
+    // Register navigation menus
+    register_nav_menus( array(
+        'primary'      => esc_html__( 'Primary Menu', 'skeleton-wp' ),
+        'footer-links' => esc_html__( 'Footer Links', 'skeleton-wp' ),
+    ) );
+
+    // HTML5 support
+    add_theme_support( 'html5', array(
+        'search-form', 'comment-form', 'comment-list',
+        'gallery', 'caption', 'script', 'style',
+    ) );
+
+    // Post Formats
+    add_theme_support( 'post-formats', array(
+        'aside', 'image', 'video', 'quote', 'link', 'gallery',
+    ) );
+
+    // Custom logo
+    add_theme_support( 'custom-logo', array(
+        'height'      => 80,
+        'width'       => 280,
+        'flex-height' => true,
+        'flex-width'  => true,
+    ) );
+
+    // Custom background
+    add_theme_support( 'custom-background', array(
+        'default-color' => 'D1D9DD',
+    ) );
+
+    // Custom header
+    add_theme_support( 'custom-header', array(
+        'default-image'  => '',
+        'width'          => 1200,
+        'height'         => 500,
+        'flex-width'     => true,
+        'flex-height'    => true,
+    ) );
+
+    // Selective refresh for widgets
+    add_theme_support( 'customize-selective-refresh-widgets' );
+
+    // Wide / full blocks alignment
+    add_theme_support( 'align-wide' );
+
+    // Responsive embeds
+    add_theme_support( 'responsive-embeds' );
+}
+endif;
+add_action( 'after_setup_theme', 'skeleton_wp_setup' );
+
+/* =====================================================
+   CONTENT WIDTH
+   ===================================================== */
+
+function skeleton_wp_content_width() {
+    $GLOBALS['content_width'] = apply_filters( 'skeleton_wp_content_width', 860 );
+}
+add_action( 'after_setup_theme', 'skeleton_wp_content_width', 0 );
+
+/* =====================================================
+   ENQUEUE SCRIPTS & STYLES
+   ===================================================== */
+
+function skeleton_wp_scripts() {
+
+    // Google Fonts
+    wp_enqueue_style( 'skeleton-wp-google-fonts',
+        'https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap',
+        array(), null );
+
+    // Font Awesome (CDN)
+    wp_enqueue_style( 'font-awesome',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css',
+        array(), '6.5.0' );
+
+    // Main stylesheet (style.css)
+    wp_enqueue_style( 'skeleton-wp-style', get_stylesheet_uri(), array(), '1.0.0' );
+
+    // Theme JS
+    wp_enqueue_script( 'skeleton-wp-navigation',
+        get_template_directory_uri() . '/js/navigation.js',
+        array(), '1.0.0', true );
+
+    wp_enqueue_script( 'skeleton-wp-slider',
+        get_template_directory_uri() . '/js/slider.js',
+        array(), '1.0.0', true );
+
+    // Comments reply script
+    if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+        wp_enqueue_script( 'comment-reply' );
+    }
+
+    // Pass data to JS
+    wp_localize_script( 'skeleton-wp-slider', 'skeletonWP', array(
+        'ajaxUrl'     => admin_url( 'admin-ajax.php' ),
+        'themeUrl'    => get_template_directory_uri(),
+        'autoplay'    => apply_filters( 'skeleton_wp_slider_autoplay', true ),
+        'autoplayMs'  => apply_filters( 'skeleton_wp_slider_speed', 5000 ),
+    ) );
+}
+add_action( 'wp_enqueue_scripts', 'skeleton_wp_scripts' );
+
+/* =====================================================
+   REGISTER SIDEBARS
+   ===================================================== */
+
+function skeleton_wp_widgets_init() {
+
+    // Main right sidebar
+    register_sidebar( array(
+        'name'          => esc_html__( 'Main Sidebar', 'skeleton-wp' ),
+        'id'            => 'sidebar-main',
+        'description'   => esc_html__( 'Appears on the right side of the main content area.', 'skeleton-wp' ),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</section>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+
+    // Footer widget areas (3 columns)
+    for ( $i = 1; $i <= 3; $i++ ) {
+        register_sidebar( array(
+            'name'          => sprintf( esc_html__( 'Footer %d', 'skeleton-wp' ), $i ),
+            'id'            => 'footer-' . $i,
+            'description'   => sprintf( esc_html__( 'Footer widget area %d (1 of 3 columns).', 'skeleton-wp' ), $i ),
+            'before_widget' => '<div id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</div>',
+            'before_title'  => '<h4 class="widget-title">',
+            'after_title'   => '</h4>',
+        ) );
+    }
+
+    // Under-slider widget area
+    register_sidebar( array(
+        'name'          => esc_html__( 'Below Slider', 'skeleton-wp' ),
+        'id'            => 'below-slider',
+        'description'   => esc_html__( 'Full-width area that appears directly below the image slider.', 'skeleton-wp' ),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+}
+add_action( 'widgets_init', 'skeleton_wp_widgets_init' );
+
+/* =====================================================
+   SLIDER — Retrieve posts for the homepage slider
+   ===================================================== */
+
+function skeleton_wp_get_slider_posts( $count = 5 ) {
+    // Priority: posts tagged 'featured-slider', falling back to latest posts
+    $args = array(
+        'posts_per_page' => absint( $count ),
+        'post_status'    => 'publish',
+        'tag'            => 'featured-slider',
+        'ignore_sticky_posts' => true,
+    );
+    $query = new WP_Query( $args );
+    if ( ! $query->have_posts() ) {
+        $args['tag'] = '';
+        $query       = new WP_Query( $args );
+    }
+    return $query;
+}
+
+/* =====================================================
+   TEMPLATE TAGS / HELPERS
+   ===================================================== */
+
+/**
+ * Prints the post excerpt, falling back to a trimmed content.
+ */
+function skeleton_wp_excerpt( $length = 18 ) {
+    $excerpt = get_the_excerpt();
+    if ( empty( $excerpt ) ) {
+        $excerpt = get_the_content();
+        $excerpt = strip_shortcodes( $excerpt );
+        $excerpt = wp_strip_all_tags( $excerpt );
+        $words   = explode( ' ', $excerpt, $length + 1 );
+        if ( count( $words ) > $length ) {
+            array_pop( $words );
+            $excerpt = implode( ' ', $words ) . '&hellip;';
+        }
+    } else {
+        $words = explode( ' ', $excerpt, $length + 1 );
+        if ( count( $words ) > $length ) {
+            array_pop( $words );
+            $excerpt = implode( ' ', $words ) . '&hellip;';
+        }
+    }
+    echo esc_html( $excerpt );
+}
+
+/**
+ * Post meta (date, author, comments, category).
+ */
+function skeleton_wp_post_meta( $show_cat = true ) {
+    $date    = get_the_date();
+    $author  = get_the_author();
+    $link    = get_author_posts_url( get_the_author_meta( 'ID' ) );
+    $cats    = get_the_category();
+    $primary = $cats ? $cats[0] : null;
+
+    echo '<div class="post-card-meta">';
+
+    // Category badge
+    if ( $show_cat && $primary ) {
+        printf( '<a class="post-card-category" href="%s">%s</a>',
+            esc_url( get_category_link( $primary->term_id ) ),
+            esc_html( $primary->name ) );
+    }
+
+    // Date
+    printf( '<span class="meta-date">%s</span>', esc_html( $date ) );
+
+    // Author
+    printf( '<span class="meta-author"><i class="fa fa-user" aria-hidden="true"></i> <a href="%s">%s</a></span>',
+        esc_url( $link ), esc_html( $author ) );
+
+    echo '</div>';
+}
+
+/**
+ * Placeholder SVG image for posts without a thumbnail.
+ */
+function skeleton_wp_placeholder( $width = 400, $height = 230 ) {
+    printf( '<div class="post-card-thumb-placeholder">&#128247;</div>' );
+}
+
+/**
+ * Prints breadcrumbs (lightweight, no plugin required).
+ */
+function skeleton_wp_breadcrumbs() {
+    if ( is_front_page() ) return;
+
+    $sep = '<span class="sep">&rsaquo;</span>';
+    echo '<nav class="breadcrumbs" aria-label="' . esc_attr__( 'Breadcrumbs', 'skeleton-wp' ) . '">';
+    printf( '<a href="%s">%s</a> %s ', esc_url( home_url() ), esc_html__( 'Home', 'skeleton-wp' ), $sep );
+
+    if ( is_category() ) {
+        echo single_cat_title( '', false );
+    } elseif ( is_tag() ) {
+        echo single_tag_title( '', false );
+    } elseif ( is_author() ) {
+        the_author();
+    } elseif ( is_day() ) {
+        echo get_the_date();
+    } elseif ( is_month() ) {
+        echo get_the_date( 'F Y' );
+    } elseif ( is_year() ) {
+        echo get_the_date( 'Y' );
+    } elseif ( is_search() ) {
+        printf( esc_html__( 'Search: %s', 'skeleton-wp' ), get_search_query() );
+    } elseif ( is_singular() ) {
+        if ( is_singular( 'post' ) ) {
+            $cats = get_the_category();
+            if ( $cats ) {
+                printf( '<a href="%s">%s</a> %s ',
+                    esc_url( get_category_link( $cats[0]->term_id ) ),
+                    esc_html( $cats[0]->name ), $sep );
+            }
+        }
+        the_title();
+    }
+    echo '</nav>';
+}
+
+/* =====================================================
+   CUSTOM EXCERPT LENGTH & MORE LINK
+   ===================================================== */
+
+add_filter( 'excerpt_length', function() { return 20; }, 999 );
+add_filter( 'excerpt_more',   function() {
+    return '&hellip; <a class="post-card-readmore" href="' . esc_url( get_permalink() ) . '">' . esc_html__( 'Read More', 'skeleton-wp' ) . '</a>';
+} );
+
+/* =====================================================
+   BODY CLASSES
+   ===================================================== */
+
+add_filter( 'body_class', function( $classes ) {
+    if ( is_front_page() ) $classes[] = 'home-page';
+    if ( is_singular() )   $classes[] = 'has-sidebar';
+    return $classes;
+} );
+
+/* =====================================================
+   COMMENT CALLBACK
+   ===================================================== */
+
+function skeleton_wp_comment( $comment, $args, $depth ) {
+    $GLOBALS['comment'] = $comment;
+    ?>
+    <li <?php comment_class( 'comment' ); ?> id="comment-<?php comment_ID(); ?>">
+        <article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
+            <div class="comment-author vcard">
+                <?php echo get_avatar( $comment, 40 ); ?>
+                <b class="fn"><?php comment_author_link(); ?></b>
+            </div>
+            <div class="comment-metadata">
+                <a href="<?php echo esc_url( get_comment_link( $comment, $args ) ); ?>">
+                    <time datetime="<?php comment_time( 'c' ); ?>"><?php comment_date(); ?></time>
+                </a>
+                <?php edit_comment_link( esc_html__( 'Edit', 'skeleton-wp' ), ' ', '' ); ?>
+            </div>
+            <?php if ( '0' === $comment->comment_approved ) : ?>
+                <p class="comment-awaiting-moderation"><?php esc_html_e( 'Your comment is awaiting moderation.', 'skeleton-wp' ); ?></p>
+            <?php endif; ?>
+            <div class="comment-content"><?php comment_text(); ?></div>
+            <div class="reply">
+                <?php comment_reply_link( array_merge( $args, array( 'add_below' => 'div-comment', 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
+            </div>
+        </article>
+    <?php
+}
+
+/* =====================================================
+   CUSTOMIZER ADDITIONS
+   ===================================================== */
+
+add_action( 'customize_register', function( $wp_customize ) {
+
+    // --- Slider Section ---
+    $wp_customize->add_section( 'skeleton_slider', array(
+        'title'    => esc_html__( 'Image Slider', 'skeleton-wp' ),
+        'priority' => 30,
+    ) );
+    $wp_customize->add_setting( 'slider_count', array( 'default' => 5, 'sanitize_callback' => 'absint' ) );
+    $wp_customize->add_control( 'slider_count', array(
+        'label'   => esc_html__( 'Number of slider posts', 'skeleton-wp' ),
+        'section' => 'skeleton_slider',
+        'type'    => 'number',
+    ) );
+    $wp_customize->add_setting( 'slider_autoplay', array( 'default' => 1, 'sanitize_callback' => 'absint' ) );
+    $wp_customize->add_control( 'slider_autoplay', array(
+        'label'   => esc_html__( 'Autoplay slider', 'skeleton-wp' ),
+        'section' => 'skeleton_slider',
+        'type'    => 'checkbox',
+    ) );
+
+    // --- Posts Grid Section ---
+    $wp_customize->add_section( 'skeleton_posts_grid', array(
+        'title'    => esc_html__( 'Posts Grid', 'skeleton-wp' ),
+        'priority' => 35,
+    ) );
+    $wp_customize->add_setting( 'posts_per_page_grid', array( 'default' => 10, 'sanitize_callback' => 'absint' ) );
+    $wp_customize->add_control( 'posts_per_page_grid', array(
+        'label'       => esc_html__( 'Posts per page (front page grid)', 'skeleton-wp' ),
+        'section'     => 'skeleton_posts_grid',
+        'type'        => 'number',
+        'input_attrs' => array( 'min' => 2, 'max' => 32 ),
+    ) );
+
+    // --- Footer Section ---
+    $wp_customize->add_section( 'skeleton_footer', array(
+        'title'    => esc_html__( 'Footer', 'skeleton-wp' ),
+        'priority' => 100,
+    ) );
+    $wp_customize->add_setting( 'footer_copyright', array(
+        'default'           => sprintf( esc_html__( '© %d %s. All Rights Reserved.', 'skeleton-wp' ), date('Y'), get_bloginfo('name') ),
+        'sanitize_callback' => 'wp_kses_post',
+    ) );
+    $wp_customize->add_control( 'footer_copyright', array(
+        'label'   => esc_html__( 'Footer Copyright Text', 'skeleton-wp' ),
+        'section' => 'skeleton_footer',
+        'type'    => 'textarea',
+    ) );
+} );
+
+/* =====================================================
+   SIDEBAR WIDGET TWEAKS
+   ===================================================== */
+
+/**
+ * Remove built-in widgets we never want to appear in any sidebar,
+ * regardless of what's saved in the widget admin.
+ */
+add_action( 'widgets_init', function() {
+    unregister_widget( 'WP_Widget_Recent_Comments' );
+    unregister_widget( 'WP_Widget_Search' );
+}, 11 );
+
+/**
+ * Cap the Archives widget at the 12 most recent months.
+ */
+add_filter( 'widget_archives_args', function( $args ) {
+    $args['type']  = 'monthly';
+    $args['limit'] = 12;
+    return $args;
+} );
+
+add_filter( 'widget_archives_dropdown_args', function( $args ) {
+    $args['type']  = 'monthly';
+    $args['limit'] = 12;
+    return $args;
+} );
+
+/**
+ * Strip specific widget instances from the main sidebar at render time.
+ * Add a widget's auto-generated ID (e.g. "block-2") to $remove to hide it.
+ */
+add_filter( 'sidebars_widgets', function( $widgets ) {
+    $remove = array( 'block-2' );
+
+    if ( isset( $widgets['sidebar-main'] ) && is_array( $widgets['sidebar-main'] ) ) {
+        $widgets['sidebar-main'] = array_values( array_diff( $widgets['sidebar-main'], $remove ) );
+    }
+    return $widgets;
+} );
+
+/* =====================================================
+   ENQUEUE BLOCK EDITOR STYLES
+   ===================================================== */
+
+add_action( 'enqueue_block_editor_assets', function() {
+    wp_enqueue_style( 'skeleton-wp-editor',
+        get_template_directory_uri() . '/css/editor-style.css',
+        array(), '1.0.0' );
+} );
+
+/* =====================================================
+   AJAX: LOAD MORE POSTS
+   ===================================================== */
+
+add_action( 'wp_ajax_skeleton_load_more',        'skeleton_wp_load_more_posts' );
+add_action( 'wp_ajax_nopriv_skeleton_load_more', 'skeleton_wp_load_more_posts' );
+
+function skeleton_wp_load_more_posts() {
+    check_ajax_referer( 'skeleton_load_more_nonce', 'nonce' );
+
+    $page = isset( $_POST['page'] ) ? absint( $_POST['page'] ) : 2;
+    $args = array(
+        'post_type'      => 'post',
+        'post_status'    => 'publish',
+        'posts_per_page' => 10,
+        'paged'          => $page,
+    );
+    $query = new WP_Query( $args );
+
+    if ( $query->have_posts() ) {
+        while ( $query->have_posts() ) {
+            $query->the_post();
+            get_template_part( 'template-parts/content', 'card' );
+        }
+        wp_reset_postdata();
+    }
+    wp_die();
+}
