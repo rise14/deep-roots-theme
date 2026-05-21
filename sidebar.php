@@ -1,132 +1,83 @@
 <?php
 /**
  * Sidebar template — appears to the right of main content.
+ * Matches the sidebar on deeprootsmag.org.
  *
  * @package Skeleton_WP
  */
-
-if ( ! is_active_sidebar( 'sidebar-main' ) ) {
-    return;
-}
 ?>
 
 <aside id="secondary" class="widget-area" role="complementary" aria-label="<?php esc_attr_e( 'Sidebar', 'skeleton-wp' ); ?>">
 
     <?php if ( is_active_sidebar( 'sidebar-main' ) ) : ?>
         <?php dynamic_sidebar( 'sidebar-main' ); ?>
-    <?php else : ?>
-
-        <!-- ===========================
-             DEFAULT SIDEBAR CONTENT
-             (shown until widgets are added)
-        =========================== -->
-
-        <!-- Advertisement Placeholder -->
-        <section class="widget widget-banner">
-            <div class="banner-placeholder">
-                <i class="fa fa-ad" style="font-size:2.5rem;margin-bottom:10px;display:block;"></i>
-                <?php esc_html_e( 'Advertisement', 'skeleton-wp' ); ?><br>
-                <small><?php esc_html_e( '300 × 250', 'skeleton-wp' ); ?></small>
-            </div>
-        </section>
-
-        <!-- Recent Posts -->
-        <section class="widget widget-recent-posts">
-            <h3 class="widget-title"><?php esc_html_e( 'Recent Posts', 'skeleton-wp' ); ?></h3>
-            <?php
-            $recent_args = array(
-                'posts_per_page'      => 5,
-                'post_status'         => 'publish',
-                'no_found_rows'       => true,
-                'ignore_sticky_posts' => true,
-            );
-            $recent_query = new WP_Query( $recent_args );
-            if ( $recent_query->have_posts() ) :
-            ?>
-            <ul>
-            <?php while ( $recent_query->have_posts() ) : $recent_query->the_post(); ?>
-                <li>
-                    <?php if ( has_post_thumbnail() ) : ?>
-                        <a href="<?php the_permalink(); ?>">
-                            <?php the_post_thumbnail( 'skeleton-sidebar', array( 'class' => 'rp-thumb' ) ); ?>
-                        </a>
-                    <?php else : ?>
-                        <div class="rp-thumb-placeholder">&#128247;</div>
-                    <?php endif; ?>
-                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                    <span class="rp-date">
-                        <i class="fa fa-clock" aria-hidden="true"></i>
-                        <?php echo get_the_date(); ?>
-                    </span>
-                </li>
-            <?php endwhile; wp_reset_postdata(); ?>
-            </ul>
-            <?php else : ?>
-                <p><?php esc_html_e( 'No posts found.', 'skeleton-wp' ); ?></p>
-            <?php endif; ?>
-        </section>
-
-        <!-- Categories -->
-        <section class="widget">
-            <h3 class="widget-title"><?php esc_html_e( 'Categories', 'skeleton-wp' ); ?></h3>
-            <ul>
-                <?php
-                $cats = get_categories( array( 'orderby' => 'count', 'order' => 'DESC', 'number' => 10 ) );
-                if ( $cats ) :
-                    foreach ( $cats as $cat ) :
-                ?>
-                <li>
-                    <a href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
-                        <?php echo esc_html( $cat->name ); ?>
-                    </a>
-                    <span class="count"><?php echo absint( $cat->count ); ?></span>
-                </li>
-                <?php
-                    endforeach;
-                else :
-                    echo '<li>' . esc_html__( 'No categories yet.', 'skeleton-wp' ) . '</li>';
-                endif;
-                ?>
-            </ul>
-        </section>
-
-        <!-- Popular Tags -->
-        <section class="widget">
-            <h3 class="widget-title"><?php esc_html_e( 'Tags', 'skeleton-wp' ); ?></h3>
-            <?php
-            $tags = get_tags( array( 'number' => 20, 'orderby' => 'count', 'order' => 'DESC' ) );
-            if ( $tags ) :
-            ?>
-            <div class="tagcloud">
-                <?php foreach ( $tags as $tag ) : ?>
-                    <a href="<?php echo esc_url( get_tag_link( $tag->term_id ) ); ?>"
-                       style="font-size: <?php echo min( 1.6, 1.1 + ( $tag->count * 0.05 ) ); ?>rem;">
-                        <?php echo esc_html( $tag->name ); ?>
-                    </a>
-                <?php endforeach; ?>
-            </div>
-            <?php else : ?>
-                <p><?php esc_html_e( 'No tags found.', 'skeleton-wp' ); ?></p>
-            <?php endif; ?>
-        </section>
-
-        <!-- Archives -->
-        <section class="widget">
-            <h3 class="widget-title"><?php esc_html_e( 'Archives', 'skeleton-wp' ); ?></h3>
-            <ul>
-                <?php wp_get_archives( array( 'type' => 'monthly', 'limit' => 12, 'show_post_count' => true ) ); ?>
-            </ul>
-        </section>
-
-        <!-- Second Ad Placeholder -->
-        <section class="widget widget-banner">
-            <div class="banner-placeholder">
-                <i class="fa fa-ad" style="font-size:2.5rem;margin-bottom:10px;display:block;"></i>
-                <?php esc_html_e( 'Advertisement', 'skeleton-wp' ); ?><br>
-                <small><?php esc_html_e( '300 × 600', 'skeleton-wp' ); ?></small>
-            </div>
-        </section>
-
     <?php endif; ?>
+
+    <!-- ===========================
+         DEEP ROOTS SIDEBAR CONTENT
+    =========================== -->
+
+    <!-- Subscribe -->
+    <section class="widget widget-subscribe">
+        <h3 class="widget-title">Subscribe</h3>
+        <form class="subscribe-form" action="https://deeprootsmag.org" method="post" target="_blank">
+            <label for="sidebar-email" class="screen-reader-text">Email Address</label>
+            <input type="email" id="sidebar-email" name="email" placeholder="Email Address *" required
+                   style="width:100%;padding:7px 10px;margin-bottom:8px;border:1px solid #ccc;box-sizing:border-box;font-size:1.3rem;" />
+            <button type="submit"
+                    style="background:#1EAEDB;color:#fff;border:none;padding:8px 16px;cursor:pointer;font-size:1.3rem;">
+                Subscribe
+            </button>
+        </form>
+    </section>
+
+    <!-- The Bluegrass Special -->
+    <section class="widget widget-sidebar-banner">
+        <a href="http://www.thebluegrassspecial.com/archive/2013/december2013/indexdecember2013.html"
+           target="_blank" rel="noopener noreferrer">
+            <img src="https://deeprootsmag.org/sidebar/indexdecember2013thumb.jpeg"
+                 alt="The Bluegrass Special"
+                 style="width:100%;height:auto;display:block;" />
+        </a>
+        <p style="font-size:1.1rem;line-height:1.5;margin-top:6px;">
+            Before Deep Roots existed, it was TheBluegrassSpecial.com, from April 2008 through July 2012.
+        </p>
+    </section>
+
+    <!-- Panthera -->
+    <section class="widget widget-sidebar-banner">
+        <a href="http://www.panthera.org" target="_blank" rel="noopener noreferrer">
+            <img src="https://deeprootsmag.org/sidebar/panthera-logo.jpg"
+                 alt="Panthera"
+                 style="width:100%;height:auto;display:block;" />
+        </a>
+    </section>
+
+    <!-- Save The Manatee -->
+    <section class="widget widget-sidebar-banner">
+        <a href="http://www.savethemanatee.org" target="_blank" rel="noopener noreferrer">
+            <img src="https://deeprootsmag.org/sidebar/manatee-holiday.jpg"
+                 alt="Save The Manatee"
+                 style="width:100%;height:auto;display:block;" />
+        </a>
+    </section>
+
+    <!-- Matthew Shepard Foundation -->
+    <section class="widget widget-sidebar-banner">
+        <a href="https://www.matthewshepard.org/" target="_blank" rel="noopener noreferrer">
+            <img src="https://deeprootsmag.org/sidebar/shepard-vert-banner.jpg"
+                 alt="Matthew Shepard Foundation"
+                 style="width:100%;height:auto;display:block;" />
+        </a>
+    </section>
+
+    <!-- Staff Credits -->
+    <section class="widget widget-credits" style="font-size:1.2rem;line-height:1.7;">
+        <p><strong>Founder/Publisher/Editor:</strong> David McGee</p>
+        <p><strong>Design/IT:</strong> Kieran McGee</p>
+        <p><strong>Contributing Editors:</strong> Billy Altman, Julie Danielson (Jules, Seven Impossible Things Before Breakfast), Christopher Hill, Robert Hugill (Classical), David Manners, Bob Marovich (Gospel), Derk Richardson, Michael Sigman, Duncan Strauss (Talking Animals), Chip Stern</p>
+        <p><strong>Mailing Address:</strong> Deep Roots, 201 West 85th Street-5B, New York, NY 10024</p>
+        <p><strong>Email:</strong> <a href="mailto:deeprootsmag@gmail.com">deeprootsmag@gmail.com</a></p>
+    </section>
 
 </aside><!-- /#secondary -->
