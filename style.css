@@ -25,14 +25,16 @@ body {
   font-family: 'Raleway', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #222;
   background: #D1D9DD;
+  overflow-x: hidden;
 }
+html { overflow-x: hidden; }
 
 /* Grid
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .container { position: relative; width: 100%; max-width: 960px; margin: 0 auto; padding: 0 20px; box-sizing: border-box; }
 .column, .columns { width: 100%; float: left; box-sizing: border-box; }
 
-@media (min-width: 400px) {
+@media (min-width: 750px) {
   .container { padding: 0; }
 }
 @media (min-width: 750px) {
@@ -459,7 +461,7 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
   color: #aaa;
   padding: 0;
   margin: 50px auto 0;
-  width: 960px;
+  width: 100%;
   max-width: 100%;
 }
 .footer-widgets { display: flex; flex-wrap: wrap; gap: 30px; padding-bottom: 40px; }
@@ -502,6 +504,18 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 .footer-credits strong { color: #fff; margin-right: 4px; }
 .footer-copyright { text-align: center; color: #888; }
 
+/* --- Responsive Tables --- */
+.entry-content table,
+.site-main table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+/* --- Slider touch-action --- */
+.slider-wrapper { touch-action: pan-y; }
+
 /* --- Utility --- */
 .clearfix::after { content: ""; display: table; clear: both; }
 .screen-reader-text {
@@ -515,12 +529,37 @@ img { max-width: 100%; height: auto; }
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 749px) {
+  /* Layout */
   #primary, #secondary { width: 100%; float: none; margin-left: 0; }
   #secondary { margin-top: 40px; }
-  .slide img, .slide-placeholder { height: 280px; }
-  .slide-caption h2 { font-size: 2rem; }
-  h1 { font-size: 3rem; }
-  h2 { font-size: 2.5rem; }
+
+  /* Slider — fix all fixed-height containers */
+  #slider-section { height: 280px; }
+  .slider-wrapper { height: 280px; }
+  .slider-track { height: 280px; }
+  .slide { height: 280px; }
+  .slide img { height: 280px; }
+  .slide-placeholder { height: 280px; }
+  .slide-caption { padding: 20px 15px 15px; }
+  .slide-caption h2 { font-size: 1.8rem; }
+  .slide-placeholder-inner h2 { font-size: 2.2rem; }
+  .slide-placeholder-inner p { font-size: 1.4rem; }
+
+  /* Slider controls — smaller on mobile */
+  .slider-prev, .slider-next { width: 36px; height: 36px; font-size: 1.4rem; }
+  .slider-prev { left: 8px; }
+  .slider-next { right: 8px; }
+
+  /* Headings */
+  h1 { font-size: 2.8rem; }
+  h2 { font-size: 2.2rem; }
+  h3 { font-size: 1.8rem; }
+  .entry-title { font-size: 2.4rem; }
+
+  /* Top bar search — full width on small screens */
+  .top-bar-search { max-width: 100%; }
+
+  /* Footer */
   .footer-widgets { flex-direction: column; }
   .footer-bottom .container { flex-direction: column; text-align: center; }
   #masthead .container { flex-direction: column; }
