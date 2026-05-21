@@ -1,18 +1,17 @@
 /*
-Theme Name: Skeleton WP
-Theme URI: https://example.com/skeleton-wp
-Author: Custom Theme
-Author URI: https://example.com
-Description: A clean WordPress theme built on the Skeleton CSS framework. Features a logo header, full-width image slider, 2-column post grid with 8 rows, right sidebar, and footer.
-Version: 1.0.0
+Theme Name: Deep Roots Magazine
+Theme URI: https://deeprootsmag.org
+Author: K McGee
+Author URI: https://kmcgee.com
+Description: WordPress theme built on the Skeleton CSS framework.
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: skeleton-wp
+Text Domain: deeproots
 Tags: two-columns, right-sidebar, fluid-layout, responsive-layout, custom-menu, featured-images, post-formats
 */
 
 /* =============================================================
-   SKELETON CSS FRAMEWORK (v2.0.4)
+   DEEP ROOTS CSS FRAMEWORK (v2.0.4)
    ============================================================= */
 
 /* Normalize & Reset
@@ -530,4 +529,3 @@ img { max-width: 100%; height: auto; }
 /* --- No Posts / Archive messages --- */
 .no-results, .not-found { text-align: center; padding: 60px 0; }
 .no-results h1 { font-size: 2.5rem; }
-
