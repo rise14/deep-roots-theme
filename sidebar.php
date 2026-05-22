@@ -71,13 +71,4 @@
         </a>
     </section>
 
-    <!-- Staff Credits -->
-    <section class="widget widget-credits" style="font-size:1.2rem;line-height:1.7;">
-        <p><strong>Founder/Publisher/Editor:</strong> David McGee</p>
-        <p><strong>Design/IT:</strong> Kieran McGee</p>
-        <p><strong>Contributing Editors:</strong> Billy Altman, Julie Danielson (Jules, Seven Impossible Things Before Breakfast), Christopher Hill, Robert Hugill (Classical), David Manners, Bob Marovich (Gospel), Derk Richardson, Michael Sigman, Duncan Strauss (Talking Animals), Chip Stern</p>
-        <p><strong>Mailing Address:</strong> Deep Roots, 201 West 85th Street-5B, New York, NY 10024</p>
-        <p><strong>Email:</strong> <a href="mailto:deeprootsmag@gmail.com">deeprootsmag@gmail.com</a></p>
-    </section>
-
 </aside><!-- /#secondary -->
