@@ -91,6 +91,23 @@
         $slider_query = skeleton_wp_get_slider_posts( $slider_count );
     ?>
 
+    <?php
+    /*
+     * Visually hidden H1 for the front page.
+     * The site logo acts as the visual brand identifier, but search engines
+     * expect a page-level H1. This provides one without disrupting layout.
+     */
+    ?>
+    <h1 class="screen-reader-text">
+        <?php echo esc_html( get_bloginfo( 'name' ) ); ?>
+        <?php
+        $tagline = get_bloginfo( 'description' );
+        if ( $tagline ) {
+            echo ' &mdash; ' . esc_html( $tagline );
+        }
+        ?>
+    </h1>
+
     <section id="slider-section" aria-label="<?php esc_attr_e( 'Featured Posts Slider', 'skeleton-wp' ); ?>">
         <div class="slider-wrapper">
 
