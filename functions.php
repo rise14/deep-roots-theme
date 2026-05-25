@@ -8,6 +8,9 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+// SEO enhancements: OG tags, Twitter Cards, canonical, schema markup.
+require_once get_template_directory() . '/inc/seo.php';
+
 /* =====================================================
    THEME SETUP
    ===================================================== */
@@ -60,7 +63,7 @@ function skeleton_wp_setup() {
 
     // Custom background
     add_theme_support( 'custom-background', array(
-        'default-color' => 'D1D9DD',
+        'default-color' => 'CEC5B2',
     ) );
 
     // Custom header

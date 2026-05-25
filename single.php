@@ -17,6 +17,7 @@ get_header();
 
             <header class="entry-header">
                 <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+                <?php skeleton_wp_post_meta( true ); ?>
             </header>
 
             <?php if ( has_post_thumbnail() ) : ?>
