@@ -44,14 +44,14 @@ get_header();
 
                 <div class="post-card-body">
                     <div class="post-card-meta">
-                        <span><?php echo get_the_date(); ?></span>
+                        <span><?php echo esc_html( get_the_date() ); ?></span>
                         <span><i class="fa fa-user" aria-hidden="true"></i>
                             <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>">
                                 <?php the_author(); ?>
                             </a>
                         </span>
                     </div>
-                    <h2 class="post-card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                    <h2 class="post-card-title"><a href="<?php the_permalink(); ?>"><?php echo esc_html( get_the_title() ); ?></a></h2>
                     <div class="post-card-excerpt"><?php skeleton_wp_excerpt( 18 ); ?></div>
                     <div class="post-card-footer">
                         <a class="post-card-readmore" href="<?php the_permalink(); ?>">

@@ -54,7 +54,7 @@ $primary = $cats ? $cats[0] : null;
 
         <!-- Title -->
         <h2 class="post-card-title">
-            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+            <a href="<?php the_permalink(); ?>"><?php echo esc_html( get_the_title() ); ?></a>
         </h2>
 
         <!-- Excerpt -->

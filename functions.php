@@ -277,19 +277,19 @@ function skeleton_wp_breadcrumbs() {
     printf( '<a href="%s">%s</a> %s ', esc_url( home_url() ), esc_html__( 'Home', 'skeleton-wp' ), $sep );
 
     if ( is_category() ) {
-        echo single_cat_title( '', false );
+        echo esc_html( single_cat_title( '', false ) );
     } elseif ( is_tag() ) {
-        echo single_tag_title( '', false );
+        echo esc_html( single_tag_title( '', false ) );
     } elseif ( is_author() ) {
-        the_author();
+        echo esc_html( get_the_author() );
     } elseif ( is_day() ) {
-        echo get_the_date();
+        echo esc_html( get_the_date() );
     } elseif ( is_month() ) {
-        echo get_the_date( 'F Y' );
+        echo esc_html( get_the_date( 'F Y' ) );
     } elseif ( is_year() ) {
-        echo get_the_date( 'Y' );
+        echo esc_html( get_the_date( 'Y' ) );
     } elseif ( is_search() ) {
-        printf( esc_html__( 'Search: %s', 'skeleton-wp' ), get_search_query() );
+        printf( esc_html__( 'Search: %s', 'skeleton-wp' ), esc_html( get_search_query() ) );
     } elseif ( is_singular() ) {
         if ( is_singular( 'post' ) ) {
             $cats = get_the_category();
@@ -299,7 +299,7 @@ function skeleton_wp_breadcrumbs() {
                     esc_html( $cats[0]->name ), $sep );
             }
         }
-        the_title();
+        echo esc_html( get_the_title() );
     }
     echo '</nav>';
 }

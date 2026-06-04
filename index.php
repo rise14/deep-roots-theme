@@ -56,7 +56,7 @@ get_header();
                         <!-- Meta -->
                         <div class="post-card-meta">
                             <span class="meta-date">
-                                <?php echo get_the_date(); ?>
+                                <?php echo esc_html( get_the_date() ); ?>
                             </span>
                             <span class="meta-author">
                                 <i class="fa fa-user" aria-hidden="true"></i>
@@ -68,7 +68,7 @@ get_header();
 
                         <!-- Title -->
                         <h2 class="post-card-title">
-                            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                            <a href="<?php the_permalink(); ?>"><?php echo esc_html( get_the_title() ); ?></a>
                         </h2>
 
                         <!-- Excerpt -->
