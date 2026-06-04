@@ -21,7 +21,7 @@
                 <label class="screen-reader-text" for="s-topbar"><?php esc_html_e( 'Search for:', 'skeleton-wp' ); ?></label>
                 <input type="search" id="s-topbar" name="s"
                     placeholder="<?php esc_attr_e( 'Search&hellip;', 'skeleton-wp' ); ?>"
-                    value="<?php echo get_search_query(); ?>">
+                    value="<?php echo esc_attr( get_search_query() ); ?>">
                 <button type="submit" aria-label="<?php esc_attr_e( 'Search', 'skeleton-wp' ); ?>">
                     <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
@@ -55,7 +55,7 @@
                         $description = get_bloginfo( 'description', 'display' );
                         if ( $description || is_customize_preview() ) :
                         ?>
-                            <p class="site-description"><?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+                            <p class="site-description"><?php echo esc_html( $description ); ?></p>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
@@ -143,9 +143,9 @@
                                 <?php echo esc_html( $cats[0]->name ); ?>
                             </a>
                         <?php endif; ?>
-                        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                        <h2><a href="<?php the_permalink(); ?>"><?php echo esc_html( get_the_title() ); ?></a></h2>
                         <p>
-                            <?php the_date(); ?>
+                            <?php echo esc_html( get_the_date() ); ?>
                         </p>
                     </div>
                 </div><!-- /.slide -->

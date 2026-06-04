@@ -22,8 +22,8 @@
                             <?php if ( has_custom_logo() ) : ?>
                                 <?php the_custom_logo(); ?>
                             <?php else : ?>
-                                <div class="footer-site-title"><?php bloginfo( 'name' ); ?></div>
-                                <div class="footer-tagline"><?php bloginfo( 'description' ); ?></div>
+                                <div class="footer-site-title"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></div>
+                                <div class="footer-tagline"><?php echo esc_html( get_bloginfo( 'description' ) ); ?></div>
                             <?php endif; ?>
                         </div>
                         <p><?php esc_html_e( 'Your source for the latest news, articles, and features. Add widgets to the Footer 1 sidebar area to customise this column.', 'skeleton-wp' ); ?></p>
@@ -78,9 +78,9 @@
                         <ul class="footer-recent-posts">
                         <?php while ( $recent->have_posts() ) : $recent->the_post(); ?>
                             <li>
-                                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                                <a href="<?php the_permalink(); ?>"><?php echo esc_html( get_the_title() ); ?></a>
                                 <span style="display:block;font-size:1.1rem;color:#666;margin-top:3px;">
-                                    <?php echo get_the_date(); ?>
+                                    <?php echo esc_html( get_the_date() ); ?>
                                 </span>
                             </li>
                         <?php endwhile; wp_reset_postdata(); ?>
