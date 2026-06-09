@@ -29,9 +29,9 @@
             dot.className   = 'slider-dot' + ( i === 0 ? ' active' : '' );
             dot.setAttribute( 'aria-label', 'Go to slide ' + ( i + 1 ) );
             dot.setAttribute( 'type', 'button' );
-            var slideImg = slides[i].querySelector( '.slide-image' );
-            if ( slideImg ) {
-                dot.style.backgroundImage = 'url(' + slideImg.src + ')';
+            var thumb = slides[i].getAttribute( 'data-thumb' );
+            if ( thumb ) {
+                dot.style.backgroundImage = 'url(' + thumb + ')';
             }
             /* closure over i */
             ( function( idx ) {
