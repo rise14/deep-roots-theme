@@ -289,7 +289,7 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 
 /* --- Department Banner --- */
 .dept-banner-bar { line-height: 0; }
-.dept-banner-bar img { display: block; width: 100%; height: auto; }
+.dept-banner-bar img { display: block; width: 960px; height: 100px; max-width: 100%; margin: 0 auto; }
 
 /* --- Main Layout --- */
 #content-area { padding: 0; }
