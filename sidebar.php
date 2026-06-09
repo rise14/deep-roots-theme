@@ -19,7 +19,7 @@
 
     <!-- Newsletter Subscribe -->
     <section class="widget widget-newsletter">
-        <h3 class="widget-title"><?php esc_html_e( 'Stay Connected', 'skeleton-wp' ); ?></h3>
+        <h3 class="widget-title"><?php esc_html_e( 'Subscribe!', 'skeleton-wp' ); ?></h3>
         <p class="newsletter-desc"><?php esc_html_e( 'Subscribe for music reviews, essays, and more delivered to your inbox.', 'skeleton-wp' ); ?></p>
         <form id="listmonk-subscribe-form" novalidate>
             <?php wp_nonce_field( 'listmonk_subscribe', 'listmonk_nonce' ); ?>
