@@ -17,6 +17,25 @@
          DEEP ROOTS SIDEBAR CONTENT
     =========================== -->
 
+    <!-- Newsletter Subscribe -->
+    <section class="widget widget-newsletter">
+        <h3 class="widget-title"><?php esc_html_e( 'Stay Connected', 'skeleton-wp' ); ?></h3>
+        <p class="newsletter-desc"><?php esc_html_e( 'Subscribe for music reviews, essays, and more delivered to your inbox.', 'skeleton-wp' ); ?></p>
+        <form id="listmonk-subscribe-form" novalidate>
+            <?php wp_nonce_field( 'listmonk_subscribe', 'listmonk_nonce' ); ?>
+            <label for="subscriber-email" class="screen-reader-text"><?php esc_html_e( 'Email address', 'skeleton-wp' ); ?></label>
+            <input type="email"
+                   id="subscriber-email"
+                   name="subscriber_email"
+                   class="newsletter-input"
+                   placeholder="<?php esc_attr_e( 'Your email address', 'skeleton-wp' ); ?>"
+                   required
+                   autocomplete="email" />
+            <button type="submit" class="newsletter-btn"><?php esc_html_e( 'Subscribe', 'skeleton-wp' ); ?></button>
+            <div id="listmonk-message" role="alert" aria-live="polite"></div>
+        </form>
+    </section>
+
     <!-- The Bluegrass Special -->
     <section class="widget widget-sidebar-banner">
         <a href="http://www.thebluegrassspecial.com/archive/2013/december2013/indexdecember2013.html"

@@ -485,3 +485,116 @@ function skeleton_wp_load_more_posts() {
     }
     wp_die();
 }
+
+/* =====================================================
+   AJAX: LISTMONK NEWSLETTER SUBSCRIBE
+   ===================================================== */
+
+add_action( 'wp_ajax_listmonk_subscribe',        'skeleton_wp_listmonk_subscribe' );
+add_action( 'wp_ajax_nopriv_listmonk_subscribe', 'skeleton_wp_listmonk_subscribe' );
+
+function skeleton_wp_listmonk_subscribe() {
+    check_ajax_referer( 'listmonk_subscribe', 'listmonk_nonce' );
+
+    $email = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+
+    if ( ! is_email( $email ) ) {
+        wp_send_json_error( array( 'message' => esc_html__( 'Please enter a valid email address.', 'skeleton-wp' ) ) );
+    }
+
+    $response = wp_remote_post(
+        'https://listmonk.zardoz14.synology.me/api/public/subscription',
+        array(
+            'headers' => array( 'Content-Type' => 'application/json' ),
+            'body'    => wp_json_encode( array(
+                'email'      => $email,
+                'list_uuids' => array( '97e948da-61de-42e6-8e3a-5184ec2fcf11' ),
+            ) ),
+            'timeout' => 10,
+        )
+    );
+
+    if ( is_wp_error( $response ) ) {
+        wp_send_json_error( array( 'message' => esc_html__( 'Could not reach the mailing list server. Please try again later.', 'skeleton-wp' ) ) );
+    }
+
+    $code = wp_remote_retrieve_response_code( $response );
+
+    if ( $code >= 200 && $code < 300 ) {
+        wp_send_json_success( array( 'message' => esc_html__( 'Thank you! Check your email to confirm your subscription.', 'skeleton-wp' ) ) );
+    } else {
+        $body = json_decode( wp_remote_retrieve_body( $response ), true );
+        $msg  = isset( $body['message'] ) ? $body['message'] : esc_html__( 'Subscription failed. Please try again.', 'skeleton-wp' );
+        wp_send_json_error( array( 'message' => esc_html( $msg ) ) );
+    }
+}
+
+/* =====================================================
+   NEWSLETTER: INLINE ASSETS
+   ===================================================== */
+
+add_action( 'wp_enqueue_scripts', 'skeleton_wp_newsletter_assets' );
+
+function skeleton_wp_newsletter_assets() {
+    $css = '
+.widget-newsletter { padding: 14px 0; }
+.widget-newsletter .newsletter-desc { font-size: 0.92rem; line-height: 1.5; margin: 0 0 10px; }
+.widget-newsletter .newsletter-input {
+    display: block; width: 100%; box-sizing: border-box;
+    padding: 8px 10px; margin-bottom: 8px;
+    border: 1px solid #b0a090; border-radius: 3px;
+    font-size: 0.9rem; font-family: inherit; background: #fff;
+}
+.widget-newsletter .newsletter-input:focus { outline: 2px solid #7a5c3a; border-color: #7a5c3a; }
+.widget-newsletter .newsletter-btn {
+    display: block; width: 100%; padding: 9px 12px;
+    background: #7a5c3a; color: #fff; border: none; border-radius: 3px;
+    font-size: 0.9rem; font-family: inherit; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
+}
+.widget-newsletter .newsletter-btn:hover { background: #5e4328; }
+.widget-newsletter .newsletter-btn:disabled { background: #aaa; cursor: not-allowed; }
+#listmonk-message { margin-top: 8px; font-size: 0.88rem; line-height: 1.4; min-height: 1.4em; }
+#listmonk-message.newsletter-success { color: #2d6a2d; }
+#listmonk-message.newsletter-error   { color: #a32020; }
+';
+    wp_add_inline_style( 'skeleton-wp-style', $css );
+
+    $js = '
+(function () {
+    var form = document.getElementById("listmonk-subscribe-form");
+    if (!form) return;
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var msg   = document.getElementById("listmonk-message");
+        var btn   = form.querySelector(".newsletter-btn");
+        var email = document.getElementById("subscriber-email").value.trim();
+        var nonce = form.querySelector("input[name=\'listmonk_nonce\']").value;
+        msg.textContent = "";
+        msg.className   = "";
+        btn.disabled    = true;
+        btn.textContent = "Subscribing…";
+        var data = new FormData();
+        data.append("action", "listmonk_subscribe");
+        data.append("email", email);
+        data.append("listmonk_nonce", nonce);
+        fetch(skeletonWP.ajaxUrl, { method: "POST", body: data })
+            .then(function (r) { return r.json(); })
+            .then(function (res) {
+                msg.textContent = res.data.message;
+                msg.className   = res.success ? "newsletter-success" : "newsletter-error";
+                if (res.success) { form.reset(); }
+            })
+            .catch(function () {
+                msg.textContent = "An error occurred. Please try again.";
+                msg.className   = "newsletter-error";
+            })
+            .finally(function () {
+                btn.disabled    = false;
+                btn.textContent = "Subscribe";
+            });
+    });
+})();
+';
+    wp_add_inline_script( 'skeleton-wp-slider', $js );
+}
