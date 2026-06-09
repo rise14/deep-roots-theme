@@ -17,20 +17,6 @@
          DEEP ROOTS SIDEBAR CONTENT
     =========================== -->
 
-    <!-- Subscribe -->
-    <section class="widget widget-subscribe">
-        <h3 class="widget-title">Subscribe</h3>
-        <form class="subscribe-form" action="https://deeprootsmag.org" method="post" target="_blank">
-            <label for="sidebar-email" class="screen-reader-text">Email Address</label>
-            <input type="email" id="sidebar-email" name="email" placeholder="Email Address *" required
-                   style="width:100%;padding:7px 10px;margin-bottom:8px;border:1px solid #ccc;box-sizing:border-box;font-size:1.3rem;" />
-            <button type="submit"
-                    style="background:#1EAEDB;color:#fff;border:none;padding:8px 16px;cursor:pointer;font-size:1.3rem;">
-                Subscribe
-            </button>
-        </form>
-    </section>
-
     <!-- The Bluegrass Special -->
     <section class="widget widget-sidebar-banner">
         <a href="http://www.thebluegrassspecial.com/archive/2013/december2013/indexdecember2013.html"

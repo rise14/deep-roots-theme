@@ -244,6 +244,8 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
   padding: 40px 30px 25px; color: #fff;
 }
 .slide-caption h2 { color: #fff; margin-bottom: 5px; font-size: 2.8rem; }
+.slide-caption h2 a { color: #fff; text-decoration: none; }
+.slide-caption h2 a:hover { color: rgba(255,255,255,0.8); }
 .slide-caption p { color: rgba(255,255,255,0.85); margin: 0; font-size: 1.5rem; }
 
 /* Slider Controls */
