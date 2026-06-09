@@ -661,3 +661,13 @@ function skeleton_wp_newsletter_assets() {
 ';
     wp_add_inline_script( 'skeleton-wp-slider', $js );
 }
+
+/**
+ * Show 10 posts per page on category archive pages.
+ */
+add_action( 'pre_get_posts', 'skeleton_wp_category_posts_per_page' );
+function skeleton_wp_category_posts_per_page( $query ) {
+    if ( ! is_admin() && $query->is_main_query() && $query->is_category() ) {
+        $query->set( 'posts_per_page', 10 );
+    }
+}
