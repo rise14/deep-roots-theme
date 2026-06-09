@@ -202,6 +202,7 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 }
 @media (max-width: 749px) {
   .menu-toggle { display: block; }
+  .main-navigation { width: 100%; }
   .main-navigation ul { display: none; flex-direction: column; width: 100%; }
   .main-navigation.toggled ul { display: flex; }
   .main-navigation ul ul { position: static; box-shadow: none; border-top: none; padding-left: 15px; }
@@ -285,6 +286,10 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 #breadcrumbs-bar a { color: #555; text-decoration: none; }
 #breadcrumbs-bar a:hover { color: #95755a; }
 #breadcrumbs-bar span { margin: 0 6px; }
+
+/* --- Department Banner --- */
+.dept-banner-bar { line-height: 0; }
+.dept-banner-bar img { display: block; width: 100%; height: auto; }
 
 /* --- Main Layout --- */
 #content-area { padding: 0; }

@@ -208,6 +208,54 @@
     </div>
     <?php endif; ?>
 
+    <?php
+    // Department banner: shown on single posts and category archive pages.
+    if ( is_single() || is_category() ) :
+        $dept_banner_map = array(
+            'seven-impossible-things-before-breakfast' => 'seven-impossible-things-banner.png',
+            'sing-we-now-of-christmas-2013'            => 'sing-we-now-of-christmas-banner.jpeg',
+        );
+        $banner_dir  = get_template_directory() . '/images/dept-banners/';
+        $banner_base = get_template_directory_uri() . '/images/dept-banners/';
+        $banner_src  = '';
+        $banner_alt  = '';
+
+        // Build the list of category slugs to check.
+        if ( is_category() ) {
+            $obj   = get_queried_object();
+            $slugs = array( array( 'slug' => $obj->slug, 'name' => $obj->name ) );
+        } else {
+            $slugs = array_map( function( $cat ) {
+                return array( 'slug' => $cat->slug, 'name' => $cat->name );
+            }, get_the_category( get_queried_object_id() ) );
+        }
+
+        foreach ( $slugs as $item ) {
+            $slug = $item['slug'];
+            if ( isset( $dept_banner_map[ $slug ] ) ) {
+                $file = $dept_banner_map[ $slug ];
+            } else {
+                $file = '';
+                foreach ( array( 'jpg', 'jpeg', 'png', 'webp', 'gif' ) as $ext ) {
+                    if ( file_exists( $banner_dir . $slug . '-banner.' . $ext ) ) {
+                        $file = $slug . '-banner.' . $ext;
+                        break;
+                    }
+                }
+            }
+            if ( $file && file_exists( $banner_dir . $file ) ) {
+                $banner_src = $banner_base . $file;
+                $banner_alt = $item['name'];
+                break;
+            }
+        }
+
+        if ( $banner_src ) : ?>
+    <div class="dept-banner-bar">
+        <img src="<?php echo esc_url( $banner_src ); ?>" alt="<?php echo esc_attr( $banner_alt ); ?>">
+    </div>
+    <?php endif; ?>
+    <?php endif; ?>
 
     <!-- ==========================================
          MAIN CONTENT WRAPPER
