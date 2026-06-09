@@ -208,7 +208,7 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 }
 
 /* --- Image Slider --- */
-#slider-section { background: #3d2f23; padding: 0; overflow: hidden; width: 960px; max-width: 100%; height: 500px; margin: 0 auto; }
+#slider-section { background: #3d2f23; padding: 0; width: 960px; max-width: 100%; margin: 0 auto; }
 .slider-wrapper {
   position: relative; overflow: hidden;
   width: 960px; max-width: 100%; height: 500px;
@@ -567,7 +567,6 @@ img { max-width: 100%; height: auto; }
   #secondary { margin-top: 40px; }
 
   /* Slider — fix all fixed-height containers */
-  #slider-section { height: 280px; }
   .slider-wrapper { height: 280px; }
   .slider-track { height: 280px; }
   .slide { height: 280px; }
@@ -640,7 +639,6 @@ img { max-width: 100%; height: auto; }
 
 /* --- Tablet slider breakpoint (750px – 959px) --- */
 @media (min-width: 750px) and (max-width: 959px) {
-  #slider-section    { height: 360px; }
   .slider-wrapper    { height: 360px; }
   .slider-track      { height: 360px; }
   .slide             { height: 360px; }

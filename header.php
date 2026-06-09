@@ -115,7 +115,7 @@
             <?php if ( $slider_query->have_posts() ) : ?>
 
                 <?php while ( $slider_query->have_posts() ) : $slider_query->the_post(); ?>
-                <div class="slide">
+                <div class="slide" data-thumb="<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'skeleton-card' ) ); ?>">
                     <?php if ( has_post_thumbnail() ) : ?>
                         <a href="<?php the_permalink(); ?>">
                             <?php the_post_thumbnail( 'skeleton-slide', array(
