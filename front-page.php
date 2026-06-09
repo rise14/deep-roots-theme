@@ -62,12 +62,6 @@ $grid_query = new WP_Query( array(
                                 <div class="post-card-thumb-placeholder">&#128247;</div>
                             <?php endif; ?>
 
-                            <?php if ( $primary ) : ?>
-                                <a class="post-card-category"
-                                   href="<?php echo esc_url( get_category_link( $primary->term_id ) ); ?>">
-                                    <?php echo esc_html( $primary->name ); ?>
-                                </a>
-                            <?php endif; ?>
                         </div>
 
                         <div class="post-card-body">
