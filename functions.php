@@ -487,6 +487,26 @@ function skeleton_wp_load_more_posts() {
 }
 
 /* =====================================================
+   MOBILE NAV: CRITICAL STATE CSS
+   The CSS debloat/optimiser plugin strips state-based rules
+   (.toggled, .sub-menu-open) from style.css when it inlines
+   critical CSS. Injecting them here via wp_add_inline_style
+   ensures they survive and the hamburger menu actually works.
+   ===================================================== */
+
+add_action( 'wp_enqueue_scripts', 'skeleton_wp_mobile_nav_critical_css' );
+
+function skeleton_wp_mobile_nav_critical_css() {
+    $css = '
+@media (max-width: 749px) {
+  .main-navigation.toggled ul { display: flex !important; }
+  .main-navigation ul li.sub-menu-open > ul { display: flex !important; }
+}
+';
+    wp_add_inline_style( 'skeleton-wp-style', $css );
+}
+
+/* =====================================================
    AJAX: LISTMONK NEWSLETTER SUBSCRIBE
    ===================================================== */
 
