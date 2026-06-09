@@ -13,7 +13,17 @@ get_header();
 
         <?php if ( have_posts() ) : ?>
 
-            <header class="page-header" style="margin-bottom:25px;">
+            <?php
+            $is_dept_page = false;
+            if ( is_category() ) {
+                $term = get_queried_object();
+                if ( $term->parent ) {
+                    $parent = get_term( $term->parent, 'category' );
+                    $is_dept_page = ( ! is_wp_error( $parent ) && 'departments' === $parent->slug );
+                }
+            }
+            ?>
+            <header<?php echo $is_dept_page ? '' : ' class="page-header"'; ?> style="margin-bottom:25px;">
                 <?php the_archive_title( '<h1 class="page-title" style="margin-bottom:10px;">', '</h1>' ); ?>
                 <?php the_archive_description( '<div class="archive-description" style="color:#666;font-size:1.4rem;margin-top:-15px;margin-bottom:20px;">', '</div>' ); ?>
             </header>
