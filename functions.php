@@ -487,6 +487,64 @@ function skeleton_wp_load_more_posts() {
 }
 
 /* =====================================================
+   ARCHIVES PAGE: NAV MENU ITEM + INLINE STYLES
+   Appends "Archives" to the primary menu automatically once a
+   page with slug "archives" exists and is published. The page
+   template page-archives.php is applied automatically by
+   WordPress via the page-{slug} template hierarchy.
+   ===================================================== */
+
+add_filter( 'wp_nav_menu_items', 'skeleton_wp_archives_menu_item', 10, 2 );
+
+function skeleton_wp_archives_menu_item( $items, $args ) {
+    if ( isset( $args->theme_location ) && 'primary' === $args->theme_location ) {
+        $page = get_page_by_path( 'archives' );
+        if ( $page && 'publish' === $page->post_status ) {
+            $items .= '<li class="menu-item menu-item-archives"><a href="'
+                . esc_url( get_permalink( $page ) )
+                . '">' . esc_html__( 'Archives', 'skeleton-wp' ) . '</a></li>';
+        }
+    }
+    return $items;
+}
+
+add_action( 'wp_enqueue_scripts', 'skeleton_wp_archives_styles' );
+
+function skeleton_wp_archives_styles() {
+    $css = '
+/* ---- Archives listing page ---- */
+.archives-listing { margin-top: 10px; }
+.archive-year { margin-bottom: 40px; }
+.archive-year-heading {
+    font-size: 2.4rem; font-weight: 700; color: #3d2f23;
+    border-bottom: 3px solid #95755a; padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+.archive-month { margin-bottom: 24px; }
+.archive-month-heading {
+    font-size: 1.5rem; font-weight: 700; color: #95755a;
+    text-transform: uppercase; letter-spacing: .08rem;
+    margin-bottom: 10px; padding-left: 10px;
+    border-left: 4px solid #95755a;
+}
+.archive-post-list { list-style: none; padding: 0; margin: 0; }
+.archive-post-item {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 6px 0; border-bottom: 1px solid #ede8e0; font-size: 1.35rem;
+}
+.archive-post-item:last-child { border-bottom: none; }
+.archive-post-item a { color: #3d2f23; text-decoration: none; flex: 1; padding-right: 12px; }
+.archive-post-item a:hover { color: #95755a; text-decoration: underline; }
+.archive-post-day { color: #999; font-size: 1.1rem; white-space: nowrap; }
+@media (max-width: 749px) {
+    .archive-post-item { flex-direction: column; gap: 2px; }
+    .archive-post-day { font-size: 1.05rem; }
+}
+';
+    wp_add_inline_style( 'skeleton-wp-style', $css );
+}
+
+/* =====================================================
    MOBILE NAV: CRITICAL STATE CSS
    The CSS debloat/optimiser plugin strips state-based rules
    (.toggled, .sub-menu-open) from style.css when it inlines
