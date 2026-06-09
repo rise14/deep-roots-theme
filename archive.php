@@ -23,10 +23,12 @@ get_header();
                 }
             }
             ?>
-            <header<?php echo $is_dept_page ? '' : ' class="page-header"'; ?> style="margin-bottom:25px;">
+            <?php if ( ! $is_dept_page ) : ?>
+            <header class="page-header" style="margin-bottom:25px;">
                 <?php the_archive_title( '<h1 class="page-title" style="margin-bottom:10px;">', '</h1>' ); ?>
                 <?php the_archive_description( '<div class="archive-description" style="color:#666;font-size:1.4rem;margin-top:-15px;margin-bottom:20px;">', '</div>' ); ?>
             </header>
+            <?php endif; ?>
 
             <div class="posts-grid">
             <?php
