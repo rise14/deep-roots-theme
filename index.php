@@ -53,19 +53,6 @@ get_header();
                     <!-- Body -->
                     <div class="post-card-body">
 
-                        <!-- Meta -->
-                        <div class="post-card-meta">
-                            <span class="meta-date">
-                                <?php echo esc_html( get_the_date() ); ?>
-                            </span>
-                            <span class="meta-author">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>">
-                                    <?php the_author(); ?>
-                                </a>
-                            </span>
-                        </div>
-
                         <!-- Title -->
                         <h2 class="post-card-title">
                             <a href="<?php the_permalink(); ?>"><?php echo esc_html( get_the_title() ); ?></a>
