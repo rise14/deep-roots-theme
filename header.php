@@ -115,7 +115,12 @@
             <?php if ( $slider_query->have_posts() ) : ?>
 
                 <?php while ( $slider_query->have_posts() ) : $slider_query->the_post(); ?>
-                <div class="slide" data-thumb="<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'skeleton-card' ) ); ?>">
+                <?php
+                $slide_thumb = get_the_post_thumbnail_url( get_the_ID(), 'skeleton-card' )
+                    ?: get_the_post_thumbnail_url( get_the_ID(), 'thumbnail' )
+                    ?: get_the_post_thumbnail_url( get_the_ID(), 'full' );
+                ?>
+                <div class="slide" data-thumb="<?php echo esc_url( $slide_thumb ); ?>">
                     <?php if ( has_post_thumbnail() ) : ?>
                         <a href="<?php the_permalink(); ?>">
                             <?php the_post_thumbnail( 'skeleton-slide', array(
@@ -134,15 +139,6 @@
                     <?php endif; ?>
 
                     <div class="slide-caption">
-                        <?php
-                        $cats = get_the_category();
-                        if ( $cats ) :
-                        ?>
-                            <a class="post-card-category"
-                               href="<?php echo esc_url( get_category_link( $cats[0]->term_id ) ); ?>">
-                                <?php echo esc_html( $cats[0]->name ); ?>
-                            </a>
-                        <?php endif; ?>
                         <h2><a href="<?php the_permalink(); ?>"><?php echo esc_html( get_the_title() ); ?></a></h2>
                         <p>
                             <?php echo esc_html( get_the_date() ); ?>

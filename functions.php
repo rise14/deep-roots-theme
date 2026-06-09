@@ -241,14 +241,6 @@ function skeleton_wp_post_meta( $show_cat = true ) {
     $primary = $cats ? $cats[0] : null;
 
     echo '<div class="post-card-meta">';
-
-    // Category badge
-    if ( $show_cat && $primary ) {
-        printf( '<a class="post-card-category" href="%s">%s</a>',
-            esc_url( get_category_link( $primary->term_id ) ),
-            esc_html( $primary->name ) );
-    }
-
     echo '</div>';
 }
 
