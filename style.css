@@ -306,7 +306,7 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 }
 
 /* --- Post Grid (2 columns, 8 rows = 16 posts) --- */
-.posts-grid { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 30px; }
+.posts-grid { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 25px; margin-bottom: 30px; }
 .post-card {
   width: calc(50% - 10px);
   background: #fff;
