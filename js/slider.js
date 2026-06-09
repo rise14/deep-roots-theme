@@ -22,13 +22,17 @@
 
         if ( total < 1 ) return;
 
-        /* ---- Build dots ---- */
+        /* ---- Build thumbnail dots ---- */
         var dots = [];
         for ( var i = 0; i < total; i++ ) {
             var dot = document.createElement( 'button' );
             dot.className   = 'slider-dot' + ( i === 0 ? ' active' : '' );
             dot.setAttribute( 'aria-label', 'Go to slide ' + ( i + 1 ) );
             dot.setAttribute( 'type', 'button' );
+            var slideImg = slides[i].querySelector( '.slide-image' );
+            if ( slideImg ) {
+                dot.style.backgroundImage = 'url(' + slideImg.src + ')';
+            }
             /* closure over i */
             ( function( idx ) {
                 dot.addEventListener( 'click', function () { goTo( idx ); } );

@@ -182,10 +182,10 @@
                 <i class="fa fa-chevron-right" aria-hidden="true"></i>
             </button>
 
-            <!-- Dots -->
-            <div class="slider-dots" id="sliderDots"></div>
-
         </div><!-- /.slider-wrapper -->
+
+        <!-- Thumbnail Dots -->
+        <div class="slider-dots" id="sliderDots"></div>
     </section><!-- /#slider-section -->
 
     <?php

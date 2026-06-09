@@ -261,17 +261,21 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 .slider-next { right: 20px; }
 .slider-prev:hover, .slider-next:hover { background: rgba(255,255,255,0.3); border-color: #fff; }
 
-/* Slider Dots */
+/* Slider Dots (thumbnail strip) */
 .slider-dots {
-  position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
-  display: flex; gap: 8px; z-index: 10;
+  display: flex; gap: 6px; justify-content: center;
+  padding: 8px 0; background: #3d2f23;
+  width: 960px; max-width: 100%; margin: 0 auto;
 }
 .slider-dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  background: rgba(255,255,255,0.4); border: 2px solid rgba(255,255,255,0.6);
-  cursor: pointer; transition: all 0.2s;
+  width: 80px; height: 52px; border-radius: 3px;
+  background-color: #5a4535; background-size: cover; background-position: center;
+  border: 3px solid transparent;
+  cursor: pointer; transition: border-color 0.2s, opacity 0.2s;
+  opacity: 0.6; flex-shrink: 0;
 }
-.slider-dot.active { background: #fff; transform: scale(1.2); }
+.slider-dot.active { border-color: #fff; opacity: 1; }
+.slider-dot:hover { opacity: 0.9; }
 
 /* --- Breadcrumbs --- */
 #breadcrumbs-bar {
@@ -716,9 +720,9 @@ img { max-width: 100%; height: auto; }
   .slider-prev { left: 8px; }
   .slider-next { right: 8px; }
 
-  /* ---- Slider dots: larger tap target ---- */
-  .slider-dot { width: 14px; height: 14px; }
-  .slider-dots { gap: 12px; bottom: 12px; }
+  /* ---- Slider dots: smaller thumbnails on mobile ---- */
+  .slider-dot { width: 52px; height: 34px; }
+  .slider-dots { gap: 4px; }
 
   /* ---- Pagination: 44px ---- */
   .posts-pagination .page-numbers { width: 44px; height: 44px; font-size: 1.3rem; }
