@@ -102,7 +102,7 @@
                         <?php esc_html_e( 'David McGee', 'skeleton-wp' ); ?>
                     </p>
                     <p>
-                        <strong><?php esc_html_e( 'Design/IT:', 'skeleton-wp' ); ?></strong>
+                        <strong><?php esc_html_e( 'Web Design/Maintenance:', 'skeleton-wp' ); ?></strong>
                         <?php esc_html_e( 'Kieran McGee', 'skeleton-wp' ); ?>
                     </p>
                     <p>
