@@ -249,13 +249,6 @@ function skeleton_wp_post_meta( $show_cat = true ) {
             esc_html( $primary->name ) );
     }
 
-    // Date
-    printf( '<span class="meta-date">%s</span>', esc_html( $date ) );
-
-    // Author
-    printf( '<span class="meta-author"><i class="fa fa-user" aria-hidden="true"></i> <a href="%s">%s</a></span>',
-        esc_url( $link ), esc_html( $author ) );
-
     echo '</div>';
 }
 
