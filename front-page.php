@@ -26,11 +26,10 @@ if ( is_page() && have_posts() ) :
 endif;
 
 // Fetch latest posts for the grid (overriding static front page query)
-$grid_count = get_theme_mod( 'posts_per_page_grid', 10 );
 $grid_query = new WP_Query( array(
     'post_type'           => 'post',
     'post_status'         => 'publish',
-    'posts_per_page'      => absint( $grid_count ),
+    'posts_per_page'      => 10,
     'paged'               => get_query_var( 'paged', 1 ),
     'ignore_sticky_posts' => false,
 ) );
