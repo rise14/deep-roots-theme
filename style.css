@@ -409,7 +409,7 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 #commentform #submit:hover { background: #95755a; }
 
 /* --- Sidebar --- */
-.widget { margin-bottom: 35px; }
+/* .widget { margin-bottom: 35px; } */
 .widget-title {
   font-size: 1.3rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.12rem; color: #3d2f23;
