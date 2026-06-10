@@ -663,11 +663,11 @@ function skeleton_wp_newsletter_assets() {
 }
 
 /**
- * Show 10 posts per page on category archive pages.
+ * Show 10 posts per page on all archive pages (category, tag, date, author).
  */
-add_action( 'pre_get_posts', 'skeleton_wp_category_posts_per_page' );
-function skeleton_wp_category_posts_per_page( $query ) {
-    if ( ! is_admin() && $query->is_main_query() && $query->is_category() ) {
+add_action( 'pre_get_posts', 'skeleton_wp_archive_posts_per_page' );
+function skeleton_wp_archive_posts_per_page( $query ) {
+    if ( ! is_admin() && $query->is_main_query() && $query->is_archive() ) {
         $query->set( 'posts_per_page', 10 );
     }
 }
