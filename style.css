@@ -282,7 +282,7 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 #breadcrumbs-bar {
   background: #f0f0f0; border-bottom: 1px solid #e0e0e0;
   padding: 10px 0; font-size: 1.2rem; color: #888;
-  width: 960px; height: 40.2px;
+  width: 960px; height: 40.2px; margin: 0 auto;
 }
 #breadcrumbs-bar a { color: #555; text-decoration: none; }
 #breadcrumbs-bar a:hover { color: #95755a; }
