@@ -200,13 +200,13 @@
     ?>
 
     <!-- Breadcrumbs (not on front page) -->
-    <?php /*if ( ! is_front_page() ) : ?>
+    <?php if ( ! is_front_page() ) : ?>
     <div id="breadcrumbs-bar">
         <div class="container">
             <?php skeleton_wp_breadcrumbs(); ?>
         </div>
     </div>
-    <?php endif;*/ ?>
+    <?php endif; ?>
 
     <?php
     // Department banner: shown on single posts and category archive pages.
