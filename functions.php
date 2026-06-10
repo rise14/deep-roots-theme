@@ -667,7 +667,7 @@ function skeleton_wp_newsletter_assets() {
  */
 add_action( 'pre_get_posts', 'skeleton_wp_archive_posts_per_page' );
 function skeleton_wp_archive_posts_per_page( $query ) {
-    if ( ! is_admin() && $query->is_main_query() && $query->is_archive() ) {
+    if ( ! is_admin() && $query->is_main_query() && ( $query->is_archive() || $query->is_home() ) ) {
         $query->set( 'posts_per_page', 10 );
     }
 }
