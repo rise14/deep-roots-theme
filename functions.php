@@ -600,7 +600,7 @@ add_action( 'wp_enqueue_scripts', 'skeleton_wp_newsletter_assets' );
 
 function skeleton_wp_newsletter_assets() {
     $css = '
-.widget-newsletter { padding: 14px 0; }
+.widget-newsletter { padding: 24px 0; }
 .widget-newsletter .newsletter-desc { font-size: 0.92rem; line-height: 1.5; margin: 0 0 10px; }
 .widget-newsletter .newsletter-input {
     display: block; width: 100%; box-sizing: border-box;
