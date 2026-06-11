@@ -27,12 +27,6 @@ get_header();
                 <?php skeleton_wp_post_meta( true ); ?>
             </header>
 
-            <?php if ( has_post_thumbnail() ) : ?>
-            <div class="entry-thumbnail">
-                <?php the_post_thumbnail( 'skeleton-single', array( 'class' => 'u-full-width' ) ); ?>
-            </div>
-            <?php endif; ?>
-
             <div class="entry-content">
                 <?php
                 the_content( sprintf(
