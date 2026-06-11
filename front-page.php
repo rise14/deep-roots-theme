@@ -31,7 +31,7 @@ $grid_query = new WP_Query( array(
     'post_status'         => 'publish',
     'posts_per_page'      => 10,
     'paged'               => get_query_var( 'paged', 1 ),
-    'ignore_sticky_posts' => false,
+    'ignore_sticky_posts' => true,
 ) );
 ?>
 
