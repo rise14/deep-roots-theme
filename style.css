@@ -384,6 +384,7 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 /* --- Single Post / Page Content --- */
 .entry-header { margin-bottom: 25px; text-align: center; }
 .entry-title { font-size: 3.2rem; margin-bottom: 10px; text-align: center; }
+.entry-subtitle { font-size: 1.8rem; color: #777; text-align: center; margin-bottom: 10px; font-style: italic; }
 .entry-meta { font-size: 1.2rem; color: #999; margin-bottom: 20px; }
 .entry-meta a { color: #777; text-decoration: none; }
 .entry-meta a:hover { color: #95755a; }
