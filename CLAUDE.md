@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A custom WordPress theme called **Skeleton WP** (package/text domain: `skeleton-wp`) for the **Deep Roots** music magazine. It is built on the Skeleton CSS framework v2.0.4, which is embedded directly in `style.css`. There are no build tools — no npm, webpack, or Sass. All CSS and JS are plain files loaded directly by WordPress.
 
-The local dev environment is **MAMP** at `/Applications/MAMP/htdocs/wordpress/`. To see changes: save the file, reload the browser. No compilation step.
+The local dev environment is **MAMP** at `/Applications/MAMP/htdocs/deep-roots/`, served at `http://localhost:8888/deep-roots/`. To see changes: save the file, reload the browser. No compilation step.
 
 ## Template hierarchy
 
