@@ -1,5 +1,4 @@
 {
-  "model": "claude-fable-5",
   "permissions": {
     "allow": [
       "Bash(git init *)",
@@ -16,7 +15,24 @@
       "Bash(python3 *)",
       "Bash(pip3 install *)",
       "Bash(gh run *)",
-      "Skill(update-config)"
+      "Skill(update-config)",
+      "Read(//Applications/MAMP/htdocs/**)",
+      "Read(//Applications/MAMP/htdocs/wordpress/wp-content/**)",
+      "Bash(netstat -an -p tcp)",
+      "Bash(lsof -nP -iTCP -sTCP:LISTEN)",
+      "Bash(awk '{print $1, $9}')",
+      "Read(//tmp/**)",
+      "Bash(/Applications/MAMP/Library/bin/mysql --socket=/Applications/MAMP/tmp/mysql/mysql.sock -uroot -proot -e \"show databases;\")",
+      "Read(//Applications/MAMP/Library/bin/**)",
+      "Read(//Applications/MAMP/Library/**)",
+      "Bash(/Applications/MAMP/Library/bin/wp plugin *)",
+      "Bash(php -d error_reporting=0 -d mysqli.default_socket=/Applications/MAMP/tmp/mysql/mysql.sock /Applications/MAMP/Library/bin/wp post meta update 28781 wp_subtitle \"A Test Subtitle From Claude\")",
+      "Bash(php -d error_reporting=0 -d mysqli.default_socket=/Applications/MAMP/tmp/mysql/mysql.sock /Applications/MAMP/Library/bin/wp post url 28781)",
+      "Skill(cli-git-conventional)",
+      "Bash(/Applications/MAMP/Library/bin/mysql *)",
+      "Bash($M *)",
+      "Bash(/Applications/MAMP/Library/bin/mysql80/bin/mysql *)"
     ]
-  }
+  },
+  "model": "claude-fable-5"
 }
