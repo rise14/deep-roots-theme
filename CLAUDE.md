@@ -26,6 +26,9 @@ The local dev environment is **MAMP** at `/Applications/MAMP/htdocs/deep-roots/`
 ### Header / slider coupling
 The slider markup lives inside `header.php`, not `front-page.php`. The slider is fired from `header.php` using `skeleton_wp_get_slider_posts()` from `functions.php`. Slider posts are pulled by the `featured-slider` tag; if none are tagged, it falls back to the five latest posts. Slider count and autoplay are editable in the Customizer under **Image Slider**.
 
+### Department banners
+`header.php` renders a department banner on single posts and category archive pages (`is_single() || is_category()`). It matches the post's (or queried category's) slug against files in `images/dept-banners/` named `{category-slug}-banner.{jpg,jpeg,png,webp,gif}` — first match wins, and it silently no-ops when no file matches. To add a banner for a department, drop a correctly named image into that directory; no code changes needed. Do not add a second banner mechanism in `single.php` — it will duplicate this one.
+
 ### Front-page grid vs. main query
 `front-page.php` creates its own `$grid_query` using `WP_Query`. The post count comes from the Customizer setting `posts_per_page_grid` (default 10). The main WordPress query for the page is only used to render optional static front-page content above the grid.
 
