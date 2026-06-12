@@ -382,8 +382,6 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 .posts-pagination .page-numbers.dots { border: none; width: auto; }
 
 /* --- Single Post / Page Content --- */
-.dept-banner { margin-bottom: 25px; }
-.dept-banner img { display: block; width: 100%; height: auto; border-radius: 6px; }
 .entry-header { margin-bottom: 25px; text-align: center; }
 .entry-title { font-size: 3.2rem; margin-bottom: 10px; text-align: center; }
 .entry-subtitle { font-size: 1.8rem; color: #777; text-align: center; margin-bottom: 10px; font-style: italic; }
