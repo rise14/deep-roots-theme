@@ -211,10 +211,6 @@
     <?php
     // Department banner: shown on single posts and category archive pages.
     if ( is_single() || is_category() ) :
-        $dept_banner_map = array(
-            'seven-impossible-things-before-breakfast' => 'seven-impossible-things-banner.png',
-            'sing-we-now-of-christmas-2013'            => 'sing-we-now-of-christmas-banner.jpeg',
-        );
         $banner_dir  = get_template_directory() . '/images/dept-banners/';
         $banner_base = get_template_directory_uri() . '/images/dept-banners/';
         $banner_src  = '';
@@ -232,15 +228,11 @@
 
         foreach ( $slugs as $item ) {
             $slug = $item['slug'];
-            if ( isset( $dept_banner_map[ $slug ] ) ) {
-                $file = $dept_banner_map[ $slug ];
-            } else {
-                $file = '';
-                foreach ( array( 'jpg', 'jpeg', 'png', 'webp', 'gif' ) as $ext ) {
-                    if ( file_exists( $banner_dir . $slug . '-banner.' . $ext ) ) {
-                        $file = $slug . '-banner.' . $ext;
-                        break;
-                    }
+            $file = '';
+            foreach ( array( 'jpg', 'jpeg', 'png', 'webp', 'gif' ) as $ext ) {
+                if ( file_exists( $banner_dir . $slug . '-banner.' . $ext ) ) {
+                    $file = $slug . '-banner.' . $ext;
+                    break;
                 }
             }
             if ( $file && file_exists( $banner_dir . $file ) ) {
