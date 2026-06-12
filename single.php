@@ -15,6 +15,8 @@ get_header();
 
         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
+            <?php skeleton_wp_dept_banner(); ?>
+
             <header class="entry-header">
                 <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
                 <?php

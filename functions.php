@@ -289,6 +289,31 @@ function skeleton_wp_breadcrumbs() {
     echo '</nav>';
 }
 
+/**
+ * Prints the department banner matching one of the post's categories.
+ *
+ * Looks for images/dept-banners/{category-slug}-banner.{jpg,jpeg,png};
+ * silently no-ops when the post has no category with a banner on disk.
+ */
+function skeleton_wp_dept_banner() {
+    $cats = get_the_category();
+    if ( ! $cats ) return;
+
+    foreach ( $cats as $cat ) {
+        foreach ( array( 'jpg', 'jpeg', 'png' ) as $ext ) {
+            $file = 'images/dept-banners/' . $cat->slug . '-banner.' . $ext;
+            if ( file_exists( get_template_directory() . '/' . $file ) ) {
+                printf(
+                    '<div class="dept-banner"><img src="%s" alt="%s" /></div>',
+                    esc_url( get_template_directory_uri() . '/' . $file ),
+                    esc_attr( $cat->name )
+                );
+                return;
+            }
+        }
+    }
+}
+
 /* =====================================================
    CUSTOM EXCERPT LENGTH & MORE LINK
    ===================================================== */
