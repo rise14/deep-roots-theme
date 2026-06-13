@@ -489,17 +489,16 @@ function skeleton_wp_archives_styles() {
 .archives-listing { margin-top: 10px; }
 .archive-year { margin-bottom: 40px; }
 .archive-year-heading {
-    font-family: var(--font-display);
-    font-size: 2.6rem; font-weight: 600; color: var(--color-espresso);
-    border-bottom: 3px solid var(--color-clay); padding-bottom: 8px;
+    font-size: 2.4rem; font-weight: 700; color: #3d2f23;
+    border-bottom: 3px solid #95755a; padding-bottom: 8px;
     margin-bottom: 20px;
 }
 .archive-month { margin-bottom: 24px; }
 .archive-month-heading {
-    font-size: 1.5rem; font-weight: 700; color: var(--color-clay);
+    font-size: 1.5rem; font-weight: 700; color: #95755a;
     text-transform: uppercase; letter-spacing: .08rem;
     margin-bottom: 10px; padding-left: 10px;
-    border-left: 4px solid var(--color-clay);
+    border-left: 4px solid #95755a;
 }
 .archive-post-list { list-style: none; padding: 0; margin: 0; }
 .archive-post-item {
@@ -507,8 +506,8 @@ function skeleton_wp_archives_styles() {
     padding: 6px 0; border-bottom: 1px solid #ede8e0; font-size: 1.35rem;
 }
 .archive-post-item:last-child { border-bottom: none; }
-.archive-post-item a { color: var(--color-espresso); text-decoration: none; flex: 1; padding-right: 12px; }
-.archive-post-item a:hover { color: var(--color-clay); text-decoration: underline; }
+.archive-post-item a { color: #3d2f23; text-decoration: none; flex: 1; padding-right: 12px; }
+.archive-post-item a:hover { color: #95755a; text-decoration: underline; }
 .archive-post-day { color: #999; font-size: 1.1rem; white-space: nowrap; }
 @media (max-width: 749px) {
     .archive-post-item { flex-direction: column; gap: 2px; }
