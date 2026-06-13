@@ -28,10 +28,6 @@
                         </div>
                         <p><?php esc_html_e( 'Your source for the latest news, articles, and features. Add widgets to the Footer 1 sidebar area to customise this column.', 'skeleton-wp' ); ?></p>
                         <div class="footer-social">
-                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                             <a href="<?php echo esc_url( get_feed_link() ); ?>" aria-label="RSS"><i class="fa fa-rss"></i></a>
                         </div>
                     <?php endif; ?>

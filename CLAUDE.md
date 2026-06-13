@@ -33,7 +33,7 @@ The slider markup lives inside `header.php`, not `front-page.php`. The slider is
 `front-page.php` creates its own `$grid_query` using `WP_Query`. The post count comes from the Customizer setting `posts_per_page_grid` (default 10). The main WordPress query for the page is only used to render optional static front-page content above the grid.
 
 ### Post card markup
-The `.post-card` article markup is duplicated across `index.php`, `archive.php`, and `front-page.php`. There is a `template-parts/content-card.php` reference in the AJAX handler (`skeleton_wp_load_more_posts`), but that partial does not currently exist on disk — the AJAX load-more is wired up but the partial is missing.
+The `.post-card` article markup is duplicated across `index.php`, `archive.php`, and `front-page.php`. There is no shared partial — each template inlines the card markup.
 
 ### Registered image sizes
 ```
@@ -69,7 +69,6 @@ All custom functions use the `skeleton_wp_` prefix. Key helpers in `functions.ph
 - `skeleton_wp_excerpt( $length )` — prints trimmed excerpt, falls back to content
 - `skeleton_wp_post_meta( $show_cat )` — date / author / category badge
 - `skeleton_wp_breadcrumbs()` — lightweight breadcrumb nav (no plugin)
-- `skeleton_wp_load_more_posts()` — AJAX handler at action `skeleton_load_more`
 
 ### Navigation menus
 Two locations registered: `primary` (header nav) and `footer-links` (footer column 2). If no menu is assigned to `primary`, `skeleton_wp_fallback_menu()` (in `inc/fallback-menu.php`) renders Home + first 5 pages.
