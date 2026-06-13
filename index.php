@@ -20,10 +20,7 @@ get_header();
                 while ( have_posts() ) :
                     the_post();
 
-                    /*
-                     * Inline the card template to keep the theme self-contained.
-                     * You can also use:  get_template_part( 'template-parts/content', 'card' );
-                     */
+                    // Card markup is inlined here (and in archive.php / front-page.php).
                     $cats    = get_the_category();
                     $primary = $cats ? $cats[0] : null;
                 ?>

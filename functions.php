@@ -234,13 +234,30 @@ function skeleton_wp_excerpt( $length = 18 ) {
  * Post meta (date, author, comments, category).
  */
 function skeleton_wp_post_meta( $show_cat = true ) {
-    $date    = get_the_date();
-    $author  = get_the_author();
-    $link    = get_author_posts_url( get_the_author_meta( 'ID' ) );
-    $cats    = get_the_category();
-    $primary = $cats ? $cats[0] : null;
+    $author_name = get_the_author();
+    $author_url  = get_author_posts_url( get_the_author_meta( 'ID' ) );
+    $cats        = get_the_category();
+    $primary     = $cats ? $cats[0] : null;
 
     echo '<div class="post-card-meta">';
+
+    printf( '<span class="meta-date">%s</span>', esc_html( get_the_date() ) );
+
+    if ( $author_name ) {
+        printf( ' <span class="meta-author">%s <a href="%s">%s</a></span>',
+            esc_html__( 'by', 'skeleton-wp' ),
+            esc_url( $author_url ),
+            esc_html( $author_name )
+        );
+    }
+
+    if ( $show_cat && $primary ) {
+        printf( ' <a class="meta-category" href="%s">%s</a>',
+            esc_url( get_category_link( $primary->term_id ) ),
+            esc_html( $primary->name )
+        );
+    }
+
     echo '</div>';
 }
 
@@ -443,35 +460,6 @@ add_action( 'enqueue_block_editor_assets', function() {
 } );
 
 /* =====================================================
-   AJAX: LOAD MORE POSTS
-   ===================================================== */
-
-add_action( 'wp_ajax_skeleton_load_more',        'skeleton_wp_load_more_posts' );
-add_action( 'wp_ajax_nopriv_skeleton_load_more', 'skeleton_wp_load_more_posts' );
-
-function skeleton_wp_load_more_posts() {
-    check_ajax_referer( 'skeleton_load_more_nonce', 'nonce' );
-
-    $page = isset( $_POST['page'] ) ? absint( $_POST['page'] ) : 2;
-    $args = array(
-        'post_type'      => 'post',
-        'post_status'    => 'publish',
-        'posts_per_page' => 10,
-        'paged'          => $page,
-    );
-    $query = new WP_Query( $args );
-
-    if ( $query->have_posts() ) {
-        while ( $query->have_posts() ) {
-            $query->the_post();
-            get_template_part( 'template-parts/content', 'card' );
-        }
-        wp_reset_postdata();
-    }
-    wp_die();
-}
-
-/* =====================================================
    ARCHIVES PAGE: NAV MENU ITEM + INLINE STYLES
    Appends "Archives" to the primary menu automatically once a
    page with slug "archives" exists and is published. The page
@@ -501,16 +489,17 @@ function skeleton_wp_archives_styles() {
 .archives-listing { margin-top: 10px; }
 .archive-year { margin-bottom: 40px; }
 .archive-year-heading {
-    font-size: 2.4rem; font-weight: 700; color: #3d2f23;
-    border-bottom: 3px solid #95755a; padding-bottom: 8px;
+    font-family: var(--font-display);
+    font-size: 2.6rem; font-weight: 600; color: var(--color-espresso);
+    border-bottom: 3px solid var(--color-clay); padding-bottom: 8px;
     margin-bottom: 20px;
 }
 .archive-month { margin-bottom: 24px; }
 .archive-month-heading {
-    font-size: 1.5rem; font-weight: 700; color: #95755a;
+    font-size: 1.5rem; font-weight: 700; color: var(--color-clay);
     text-transform: uppercase; letter-spacing: .08rem;
     margin-bottom: 10px; padding-left: 10px;
-    border-left: 4px solid #95755a;
+    border-left: 4px solid var(--color-clay);
 }
 .archive-post-list { list-style: none; padding: 0; margin: 0; }
 .archive-post-item {
@@ -518,8 +507,8 @@ function skeleton_wp_archives_styles() {
     padding: 6px 0; border-bottom: 1px solid #ede8e0; font-size: 1.35rem;
 }
 .archive-post-item:last-child { border-bottom: none; }
-.archive-post-item a { color: #3d2f23; text-decoration: none; flex: 1; padding-right: 12px; }
-.archive-post-item a:hover { color: #95755a; text-decoration: underline; }
+.archive-post-item a { color: var(--color-espresso); text-decoration: none; flex: 1; padding-right: 12px; }
+.archive-post-item a:hover { color: var(--color-clay); text-decoration: underline; }
 .archive-post-day { color: #999; font-size: 1.1rem; white-space: nowrap; }
 @media (max-width: 749px) {
     .archive-post-item { flex-direction: column; gap: 2px; }
