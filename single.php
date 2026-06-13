@@ -24,7 +24,6 @@ get_header();
                     'after'  => '</p>',
                 ) );
                 ?>
-                <?php skeleton_wp_post_meta( true ); ?>
             </header>
 
             <div class="entry-content">
