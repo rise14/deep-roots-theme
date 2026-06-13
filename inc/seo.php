@@ -246,7 +246,7 @@ function skeleton_wp_schema_organization() {
 
     echo '<script type="application/ld+json">' . "\n";
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
+    echo wp_json_encode( $schema, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
     echo "\n" . '</script>' . "\n";
 }
 
@@ -316,7 +316,7 @@ function skeleton_wp_schema_article() {
 
     echo '<script type="application/ld+json">' . "\n";
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
+    echo wp_json_encode( $schema, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
     echo "\n" . '</script>' . "\n";
 }
 
@@ -397,6 +397,6 @@ function skeleton_wp_schema_breadcrumbs() {
 
     echo '<script type="application/ld+json">' . "\n";
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
+    echo wp_json_encode( $schema, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
     echo "\n" . '</script>' . "\n";
 }
