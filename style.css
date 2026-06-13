@@ -375,6 +375,7 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 .post-card-meta {
   font-size: 1.1rem; color: #999; margin-bottom: 8px;
   display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+  display: none; /* byline hidden — delete this line to restore date/author/category */
 }
 .post-card-meta a { color: #999; text-decoration: none; }
 .post-card-meta a:hover { color: var(--color-clay); }
