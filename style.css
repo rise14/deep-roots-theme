@@ -94,15 +94,22 @@ html { overflow-x: hidden; }
 h1,h2,h3,h4,h5,h6 { margin-top: 0; margin-bottom: 2rem; font-weight: 600;
   font-family: 'Fraunces', Georgia, 'Times New Roman', serif; letter-spacing: -.02rem; }
 /* ponytail: swap 'Fraunces' here + in functions.php Google Fonts URL to change display face */
-h1 { font-size: 4.0rem; line-height: 1.15; letter-spacing: -.02rem; text-align: center; margin-top: 3rem; margin-bottom: 3rem; }
-h2 { font-size: 3.6rem; line-height: 1.2; letter-spacing: -.02rem; }
-h3 { font-size: 3.0rem; line-height: 1.25; letter-spacing: -.02rem; }
+h1 { font-size: clamp(3.0rem, 2.4rem + 2vw, 4.0rem); line-height: 1.15; letter-spacing: -.02rem; text-align: center; margin-top: 3rem; margin-bottom: 3rem; }
+h2 { font-size: clamp(2.6rem, 2.1rem + 1.6vw, 3.6rem); line-height: 1.2; letter-spacing: -.02rem; }
+h3 { font-size: clamp(2.2rem, 1.9rem + 1vw, 3.0rem); line-height: 1.25; letter-spacing: -.02rem; }
 h4 { font-size: 2.4rem; line-height: 1.35; letter-spacing: -.01rem; }
 h5 { font-size: 1.8rem; line-height: 1.5; letter-spacing: -.05rem; }
 h6 { font-size: 1.5rem; line-height: 1.6; letter-spacing: 0; }
 p { margin-top: 0; }
 a { color: var(--c-accent); }
 a:hover { color: var(--c-accent-dk); }
+/* Keyboard focus ring — only shows for keyboard users, not mouse clicks */
+:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; border-radius: 2px; }
+/* Respect users who ask for less motion: kill slider/card/transform animation */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
 .button, button, input[type="submit"], input[type="reset"], input[type="button"] {
   display: inline-block; height: 38px; padding: 0 30px; color: #555; text-align: center;
   font-size: 11px; font-weight: 600; line-height: 38px; letter-spacing: .1rem; text-transform: uppercase;
