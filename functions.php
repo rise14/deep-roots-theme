@@ -104,7 +104,7 @@ function skeleton_wp_scripts() {
 
     // Google Fonts
     wp_enqueue_style( 'skeleton-wp-google-fonts',
-        'https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;900&display=swap',
+        'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Raleway:wght@300;400;600;700;900&display=swap',
         array(), null );
 
     // Font Awesome (CDN)
