@@ -13,18 +13,15 @@ get_header();
 
         <?php if ( have_posts() ) : ?>
 
-            <?php if ( ! is_category() ) : ?>
-            <header class="page-header" style="margin-bottom:25px;">
-                <?php the_archive_title( '<h1 class="page-title" style="margin-bottom:10px;">', '</h1>' ); ?>
-                <?php the_archive_description( '<div class="archive-description" style="color:#666;font-size:1.4rem;margin-top:-15px;margin-bottom:20px;">', '</div>' ); ?>
-            </header>
+            <?php if ( is_category() ) : ?>
+                <?php // Category name shows in the department banner / breadcrumbs; keep an H1 for SEO but hide it visually. ?>
+                <?php the_archive_title( '<h1 class="page-title screen-reader-text">', '</h1>' ); ?>
+            <?php else : ?>
+                <header class="page-header" style="margin-bottom:25px;">
+                    <?php the_archive_title( '<h1 class="page-title" style="margin-bottom:10px;">', '</h1>' ); ?>
+                    <?php the_archive_description( '<div class="archive-description" style="color:#666;font-size:1.4rem;margin-top:-15px;margin-bottom:20px;">', '</div>' ); ?>
+                </header>
             <?php endif; ?>
-            <?php /* Page header commented out on category pages:
-            <header class="page-header" style="margin-bottom:25px;">
-                <?php the_archive_title( '<h1 class="page-title" style="margin-bottom:10px;">', '</h1>' ); ?>
-                <?php the_archive_description( '<div class="archive-description" style="color:#666;font-size:1.4rem;margin-top:-15px;margin-bottom:20px;">', '</div>' ); ?>
-            </header>
-            */ ?>
 
             <div class="posts-grid">
             <?php
@@ -55,7 +52,7 @@ get_header();
                     <div class="post-card-excerpt"><?php skeleton_wp_excerpt( 18 ); ?></div>
                     <div class="post-card-footer">
                         <a class="post-card-readmore" href="<?php the_permalink(); ?>">
-                            <?php esc_html_e( 'Read More', 'skeleton-wp' ); ?> <i class="fa fa-arrow-right"></i>
+                            <?php esc_html_e( 'Read More', 'skeleton-wp' ); ?> <?php echo skeleton_wp_icon( 'arrow-right' ); ?>
                         </a>
                     </div>
                 </div>
@@ -66,8 +63,8 @@ get_header();
 
             <div class="posts-pagination">
                 <?php the_posts_pagination( array(
-                    'prev_text' => '<i class="fa fa-chevron-left"></i>',
-                    'next_text' => '<i class="fa fa-chevron-right"></i>',
+                    'prev_text' => skeleton_wp_icon( 'chevron-left' ),
+                    'next_text' => skeleton_wp_icon( 'chevron-right' ),
                 ) ); ?>
             </div>
 

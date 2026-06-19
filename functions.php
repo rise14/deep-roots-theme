@@ -107,10 +107,7 @@ function skeleton_wp_scripts() {
         'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Raleway:wght@300;400;600;700;900&display=swap',
         array(), null );
 
-    // Font Awesome (CDN)
-    wp_enqueue_style( 'font-awesome',
-        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css',
-        array(), '6.5.0' );
+    // Icons are now inline SVG (see skeleton_wp_icon) — no Font Awesome request.
 
     // Main stylesheet (style.css)
     wp_enqueue_style( 'skeleton-wp-style', get_stylesheet_uri(), array(), '1.0.0' );
@@ -269,6 +266,41 @@ function skeleton_wp_placeholder( $width = 400, $height = 230 ) {
 }
 
 /**
+ * Inline SVG icon (Font Awesome 6 free-solid paths). Replaces the render-blocking
+ * Font Awesome CDN stylesheet — only the handful of icons the theme uses.
+ * Sized to 1em / currentColor so it drops in wherever an <i class="fa"> was.
+ *
+ * @param string $name One of: search, bars, chevron-left, chevron-right,
+ *                     arrow-right, comment, rss, home.
+ * @return string SVG markup (already escaped-safe; paths are static literals).
+ */
+function skeleton_wp_icon( $name ) {
+    $icons = array(
+        'search'        => array( '0 0 512 512', 'M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z' ),
+        'bars'          => array( '0 0 448 512', 'M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z' ),
+        'chevron-left'  => array( '0 0 320 512', 'M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z' ),
+        'chevron-right' => array( '0 0 320 512', 'M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z' ),
+        'arrow-right'   => array( '0 0 448 512', 'M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z' ),
+        'comment'       => array( '0 0 512 512', 'M512 240c0 114.9-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6C73.6 471.1 44.7 480 16 480c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4l0 0 .3-.3c.3-.3 .7-.7 1.3-1.4c1.1-1.2 2.8-3.1 4.9-5.7c4.1-5 9.6-12.4 15.2-21.6c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208z' ),
+        'rss'           => array( '0 0 448 512', 'M0 64C0 46.3 14.3 32 32 32c229.8 0 416 186.2 416 416c0 17.7-14.3 32-32 32s-32-14.3-32-32C384 253.6 226.4 96 32 96C14.3 96 0 81.7 0 64zM0 416a64 64 0 1 1 128 0A64 64 0 1 1 0 416zM32 160c159.1 0 288 128.9 288 288c0 17.7-14.3 32-32 32s-32-14.3-32-32c0-123.7-100.3-224-224-224c-17.7 0-32-14.3-32-32s14.3-32 32-32z' ),
+        'home'          => array( '0 0 576 512', 'M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z' ),
+    );
+
+    if ( ! isset( $icons[ $name ] ) ) {
+        return '';
+    }
+
+    list( $viewbox, $path ) = $icons[ $name ];
+
+    return sprintf(
+        '<svg class="icon icon-%s" viewBox="%s" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" style="display:inline-block;vertical-align:-0.125em"><path d="%s"/></svg>',
+        esc_attr( $name ),
+        esc_attr( $viewbox ),
+        esc_attr( $path )
+    );
+}
+
+/**
  * Prints breadcrumbs (lightweight, no plugin required).
  */
 function skeleton_wp_breadcrumbs() {
@@ -318,6 +350,9 @@ add_filter( 'excerpt_more',   function() {
 /* =====================================================
    BODY CLASSES
    ===================================================== */
+
+// Drop the "Category:" / "Tag:" / "Archives:" prefix from archive H1s.
+add_filter( 'get_the_archive_title_prefix', '__return_empty_string' );
 
 add_filter( 'body_class', function( $classes ) {
     if ( is_front_page() ) $classes[] = 'home-page';

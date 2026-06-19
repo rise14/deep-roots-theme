@@ -61,11 +61,11 @@ get_header();
                         <div class="post-card-footer">
                             <a class="post-card-readmore" href="<?php the_permalink(); ?>">
                                 <?php esc_html_e( 'Read More', 'skeleton-wp' ); ?>
-                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                <?php echo skeleton_wp_icon( 'arrow-right' ); ?>
                             </a>
                             <?php if ( get_comments_number() > 0 ) : ?>
                                 <span class="post-card-comments">
-                                    <i class="fa fa-comment" aria-hidden="true"></i>
+                                    <?php echo skeleton_wp_icon( 'comment' ); ?>
                                     <?php echo absint( get_comments_number() ); ?>
                                 </span>
                             <?php endif; ?>
@@ -82,8 +82,8 @@ get_header();
                 <?php
                 the_posts_pagination( array(
                     'mid_size'  => 2,
-                    'prev_text' => '<i class="fa fa-chevron-left" aria-hidden="true"></i><span class="screen-reader-text">' . esc_html__( 'Previous', 'skeleton-wp' ) . '</span>',
-                    'next_text' => '<i class="fa fa-chevron-right" aria-hidden="true"></i><span class="screen-reader-text">' . esc_html__( 'Next', 'skeleton-wp' ) . '</span>',
+                    'prev_text' => skeleton_wp_icon( 'chevron-left' ) . '<span class="screen-reader-text">' . esc_html__( 'Previous', 'skeleton-wp' ) . '</span>',
+                    'next_text' => skeleton_wp_icon( 'chevron-right' ) . '<span class="screen-reader-text">' . esc_html__( 'Next', 'skeleton-wp' ) . '</span>',
                 ) );
                 ?>
             </div>

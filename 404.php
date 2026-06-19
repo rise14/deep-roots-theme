@@ -19,7 +19,7 @@ get_header();
                 <?php esc_html_e( 'The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.', 'skeleton-wp' ); ?>
             </p>
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="button button-primary">
-                <i class="fa fa-home" aria-hidden="true"></i>
+                <?php echo skeleton_wp_icon( 'home' ); ?>
                 <?php esc_html_e( 'Back to Home', 'skeleton-wp' ); ?>
             </a>
             <div style="max-width:400px;margin:40px auto 0;">
