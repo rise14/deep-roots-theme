@@ -28,7 +28,7 @@
                         </div>
                         <p><?php esc_html_e( 'Your source for the latest news, articles, and features. Add widgets to the Footer 1 sidebar area to customise this column.', 'skeleton-wp' ); ?></p>
                         <div class="footer-social">
-                            <a href="<?php echo esc_url( get_feed_link() ); ?>" aria-label="RSS"><i class="fa fa-rss"></i></a>
+                            <a href="<?php echo esc_url( get_feed_link() ); ?>" aria-label="RSS"><?php echo skeleton_wp_icon( 'rss' ); ?></a>
                         </div>
                     <?php endif; ?>
                 </div><!-- /.footer-col-1 -->

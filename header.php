@@ -23,7 +23,7 @@
                     placeholder="<?php esc_attr_e( 'Search&hellip;', 'skeleton-wp' ); ?>"
                     value="<?php echo esc_attr( get_search_query() ); ?>">
                 <button type="submit" aria-label="<?php esc_attr_e( 'Search', 'skeleton-wp' ); ?>">
-                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <?php echo skeleton_wp_icon( 'search' ); ?>
                 </button>
             </form>
         </div>
@@ -64,7 +64,7 @@
             <!-- PRIMARY NAVIGATION -->
             <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Primary Menu', 'skeleton-wp' ); ?>">
                 <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-                    <i class="fa fa-bars" aria-hidden="true"></i>
+                    <?php echo skeleton_wp_icon( 'bars' ); ?>
                     <span class="screen-reader-text"><?php esc_html_e( 'Menu', 'skeleton-wp' ); ?></span>
                 </button>
                 <?php
@@ -112,21 +112,22 @@
         <div class="slider-wrapper">
 
             <div class="slider-track" id="sliderTrack">
-            <?php if ( $slider_query->have_posts() ) : ?>
+            <?php if ( $slider_query->have_posts() ) : $slide_i = 0; ?>
 
-                <?php while ( $slider_query->have_posts() ) : $slider_query->the_post(); ?>
+                <?php while ( $slider_query->have_posts() ) : $slider_query->the_post(); $slide_i++; ?>
                 <?php
                 $slide_thumb = get_the_post_thumbnail_url( get_the_ID(), 'skeleton-card' )
                     ?: get_the_post_thumbnail_url( get_the_ID(), 'thumbnail' )
                     ?: get_the_post_thumbnail_url( get_the_ID(), 'full' );
+                // First slide is the LCP element: load it eagerly at high priority.
+                $slide_img_attr = ( 1 === $slide_i )
+                    ? array( 'alt' => the_title_attribute( 'echo=0' ), 'class' => 'slide-image', 'loading' => 'eager', 'fetchpriority' => 'high' )
+                    : array( 'alt' => the_title_attribute( 'echo=0' ), 'class' => 'slide-image' );
                 ?>
                 <div class="slide" data-thumb="<?php echo esc_url( $slide_thumb ); ?>">
                     <?php if ( has_post_thumbnail() ) : ?>
                         <a href="<?php the_permalink(); ?>">
-                            <?php the_post_thumbnail( 'skeleton-slide', array(
-                                'alt'   => the_title_attribute( 'echo=0' ),
-                                'class' => 'slide-image',
-                            ) ); ?>
+                            <?php the_post_thumbnail( 'skeleton-slide', $slide_img_attr ); ?>
                         </a>
                     <?php else : ?>
                         <a href="<?php the_permalink(); ?>" class="slide-placeholder">
@@ -172,10 +173,10 @@
 
             <!-- Prev / Next Buttons -->
             <button class="slider-prev" id="sliderPrev" aria-label="<?php esc_attr_e( 'Previous slide', 'skeleton-wp' ); ?>">
-                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                <?php echo skeleton_wp_icon( 'chevron-left' ); ?>
             </button>
             <button class="slider-next" id="sliderNext" aria-label="<?php esc_attr_e( 'Next slide', 'skeleton-wp' ); ?>">
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                <?php echo skeleton_wp_icon( 'chevron-right' ); ?>
             </button>
 
         </div><!-- /.slider-wrapper -->

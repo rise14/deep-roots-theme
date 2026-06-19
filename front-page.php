@@ -79,11 +79,11 @@ $grid_query = new WP_Query( array(
                             <div class="post-card-footer">
                                 <a class="post-card-readmore" href="<?php the_permalink(); ?>">
                                     <?php esc_html_e( 'Read More', 'skeleton-wp' ); ?>
-                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                    <?php echo skeleton_wp_icon( 'arrow-right' ); ?>
                                 </a>
                                 <?php if ( get_comments_number() > 0 ) : ?>
                                     <span class="post-card-comments">
-                                        <i class="fa fa-comment" aria-hidden="true"></i>
+                                        <?php echo skeleton_wp_icon( 'comment' ); ?>
                                         <?php echo absint( get_comments_number() ); ?>
                                     </span>
                                 <?php endif; ?>
@@ -101,8 +101,8 @@ $grid_query = new WP_Query( array(
                     echo paginate_links( array(
                         'total'     => $grid_query->max_num_pages,
                         'current'   => max( 1, get_query_var( 'paged' ) ),
-                        'prev_text' => '<i class="fa fa-chevron-left"></i>',
-                        'next_text' => '<i class="fa fa-chevron-right"></i>',
+                        'prev_text' => skeleton_wp_icon( 'chevron-left' ),
+                        'next_text' => skeleton_wp_icon( 'chevron-right' ),
                     ) );
                     ?>
                 </div>

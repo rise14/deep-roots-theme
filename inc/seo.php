@@ -77,12 +77,23 @@ add_action( 'wp_head', 'skeleton_wp_preconnect_hints', 1 );
 function skeleton_wp_preconnect_hints() {
     echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
     echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
-    echo '<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">' . "\n";
 }
 
 /* =====================================================
    CANONICAL URL
    ===================================================== */
+
+/**
+ * Appends the current /page/N/ segment to a base URL so paginated archives
+ * get a self-referencing canonical instead of all pointing at page 1.
+ */
+function skeleton_wp_add_paged_segment( $url ) {
+    $paged = absint( get_query_var( 'paged' ) );
+    if ( $paged > 1 && $url ) {
+        $url = user_trailingslashit( trailingslashit( $url ) . 'page/' . $paged, 'paged' );
+    }
+    return $url;
+}
 
 add_action( 'wp_head', 'skeleton_wp_canonical_tag', 2 );
 function skeleton_wp_canonical_tag() {
@@ -93,13 +104,13 @@ function skeleton_wp_canonical_tag() {
     if ( is_singular() ) {
         $canonical = get_permalink();
     } elseif ( is_front_page() || is_home() ) {
-        $canonical = home_url( '/' );
+        $canonical = skeleton_wp_add_paged_segment( home_url( '/' ) );
     } elseif ( is_category() ) {
-        $canonical = get_category_link( get_queried_object_id() );
+        $canonical = skeleton_wp_add_paged_segment( get_category_link( get_queried_object_id() ) );
     } elseif ( is_tag() ) {
-        $canonical = get_tag_link( get_queried_object_id() );
+        $canonical = skeleton_wp_add_paged_segment( get_tag_link( get_queried_object_id() ) );
     } elseif ( is_author() ) {
-        $canonical = get_author_posts_url( get_queried_object()->ID );
+        $canonical = skeleton_wp_add_paged_segment( get_author_posts_url( get_queried_object()->ID ) );
     }
 
     if ( $canonical ) {
@@ -152,7 +163,7 @@ function skeleton_wp_open_graph() {
     if ( is_singular() ) {
         $url = get_permalink();
     } elseif ( is_front_page() || is_home() ) {
-        $url = home_url( '/' );
+        $url = skeleton_wp_add_paged_segment( home_url( '/' ) );
     } else {
         global $wp;
         $url = home_url( add_query_arg( array(), $wp->request ) );
@@ -160,6 +171,7 @@ function skeleton_wp_open_graph() {
 
     echo '<meta property="og:type" content="' . esc_attr( $type ) . '">' . "\n";
     echo '<meta property="og:site_name" content="' . esc_attr( get_bloginfo( 'name' ) ) . '">' . "\n";
+    echo '<meta property="og:locale" content="' . esc_attr( get_locale() ) . '">' . "\n";
     echo '<meta property="og:url" content="' . esc_url( $url ) . '">' . "\n";
 
     if ( $title ) {
@@ -170,6 +182,16 @@ function skeleton_wp_open_graph() {
     }
     if ( $image ) {
         echo '<meta property="og:image" content="' . esc_url( $image ) . '">' . "\n";
+        echo '<meta property="og:image:alt" content="' . esc_attr( $title ) . '">' . "\n";
+
+        // Dimensions help social platforms render the card without reflow.
+        if ( is_singular() && has_post_thumbnail() ) {
+            $thumb = wp_get_attachment_image_src( get_post_thumbnail_id(), 'skeleton-single' );
+            if ( $thumb ) {
+                echo '<meta property="og:image:width" content="' . absint( $thumb[1] ) . '">' . "\n";
+                echo '<meta property="og:image:height" content="' . absint( $thumb[2] ) . '">' . "\n";
+            }
+        }
     }
 
     // Article-specific timestamps

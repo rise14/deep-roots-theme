@@ -12,7 +12,7 @@
                value="<?php echo esc_attr( get_search_query() ); ?>" name="s">
     </label>
     <button type="submit" class="search-submit button button-primary u-full-width">
-        <i class="fa fa-search" aria-hidden="true"></i>
+        <?php echo skeleton_wp_icon( 'search' ); ?>
         <?php echo esc_html_x( 'Search', 'submit button', 'skeleton-wp' ); ?>
     </button>
 </form>
