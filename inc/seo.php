@@ -80,6 +80,21 @@ function skeleton_wp_preconnect_hints() {
 }
 
 /* =====================================================
+   FAVICON
+   Theme-bundled icon. Skipped if a Site Icon is set in the
+   Customizer (WordPress outputs its own tags in that case).
+   ===================================================== */
+
+add_action( 'wp_head', 'skeleton_wp_favicon', 2 );
+function skeleton_wp_favicon() {
+    if ( has_site_icon() ) return;
+
+    $icon = get_template_directory_uri() . '/images/favicon.jpg';
+    printf( '<link rel="icon" type="image/jpeg" href="%s">' . "\n", esc_url( $icon ) );
+    printf( '<link rel="apple-touch-icon" href="%s">' . "\n", esc_url( $icon ) );
+}
+
+/* =====================================================
    CANONICAL URL
    ===================================================== */
 
