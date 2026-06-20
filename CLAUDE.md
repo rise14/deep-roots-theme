@@ -74,6 +74,22 @@ All custom functions use the `skeleton_wp_` prefix. Key helpers in `functions.ph
 ### Icons
 Icons are inline SVG, not an icon font. `skeleton_wp_icon( $name )` in `functions.php` returns a `<svg>` (sized `1em`, `fill="currentColor"`) for one of a fixed set of names: `search`, `bars`, `chevron-left`, `chevron-right`, `arrow-right`, `comment`, `rss`, `home`. Templates call `echo skeleton_wp_icon( 'search' )` (or use it directly inside `paginate_links()`/`the_posts_pagination()` `prev_text`/`next_text` strings). Because the SVG uses `currentColor` and `1em`, it inherits the surrounding element's `color` and `font-size` — no extra CSS needed. Font Awesome was **removed** (no CDN stylesheet is enqueued); to add a new icon, add its Font Awesome 6 free-solid path to the `$icons` map in `skeleton_wp_icon()` rather than reintroducing the font.
 
+### SEO (`inc/seo.php`)
+All SEO meta output lives in `inc/seo.php` (required from `functions.php`) and is hooked to `wp_head`. Every output function bails early when a full SEO plugin is active (`skeleton_wp_seo_plugin_active()` checks for Yoast / Rank Math / AIOSEO) so the theme never double-prints meta. What it emits:
+
+- **Preconnect hints** for Google Fonts (`fonts.googleapis.com`, `fonts.gstatic.com`).
+- **Canonical URL** — self-referencing per context (singular, front/home, category, tag, author). On paginated archives it appends the `/page/N/` segment via `skeleton_wp_add_paged_segment()` so page 2+ don't all canonicalize to page 1.
+- **`noindex, follow`** on search-results pages only.
+- **Meta description** — from excerpt → trimmed content (singular), tagline (front page), term description (category/tag/tax), or author bio.
+- **Open Graph** — `type`, `site_name`, `locale`, `url`, `title`, `description`, `image` (+ `image:alt`, and `image:width`/`height` from the `skeleton-single` size on single posts), plus `article:published_time`/`modified_time` on posts.
+- **Twitter Cards** — `summary_large_image` on single posts with a thumbnail, else `summary`.
+- **JSON-LD** — `NewsMediaOrganization` (every page), `NewsArticle` (single posts), and `BreadcrumbList` (mirrors the visible `skeleton_wp_breadcrumbs()` trail). The Organization block hardcodes the publisher name/email/postal address — edit it there if those change.
+
+SEO-related markup outside `inc/seo.php`:
+- **Front page H1** — a visually-hidden (`screen-reader-text`) `<h1>` with the site name/tagline lives in `header.php` (the logo is the visual brand, but search engines expect a page H1).
+- **Category archive H1** — `archive.php` outputs a `screen-reader-text` `<h1>` (the archive title) on category pages since the visible page header is intentionally hidden there; other archives (tag/author/date) keep a visible header. Archive title prefixes ("Category:", "Tag:") are stripped via the `get_the_archive_title_prefix` filter.
+- **LCP hint** — the first slider image in `header.php` gets `fetchpriority="high"` + `loading="eager"` (it's the homepage's largest contentful paint element).
+
 ### Favicon
 `skeleton_wp_favicon()` in `inc/seo.php` outputs `<link rel="icon">` + `<link rel="apple-touch-icon">` on every page (hooked to `wp_head`), pointing at `images/favicon.png` (a 102×102 square PNG). It is skipped via `has_site_icon()` when a Site Icon is set in the Customizer, so WordPress's own tags take over instead of duplicating.
 
