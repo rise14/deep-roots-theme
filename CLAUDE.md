@@ -69,6 +69,13 @@ All custom functions use the `skeleton_wp_` prefix. Key helpers in `functions.ph
 - `skeleton_wp_excerpt( $length )` — prints trimmed excerpt, falls back to content
 - `skeleton_wp_post_meta( $show_cat )` — date / author / category badge
 - `skeleton_wp_breadcrumbs()` — lightweight breadcrumb nav (no plugin)
+- `skeleton_wp_icon( $name )` — returns an inline SVG icon (see Icons below)
+
+### Icons
+Icons are inline SVG, not an icon font. `skeleton_wp_icon( $name )` in `functions.php` returns a `<svg>` (sized `1em`, `fill="currentColor"`) for one of a fixed set of names: `search`, `bars`, `chevron-left`, `chevron-right`, `arrow-right`, `comment`, `rss`, `home`. Templates call `echo skeleton_wp_icon( 'search' )` (or use it directly inside `paginate_links()`/`the_posts_pagination()` `prev_text`/`next_text` strings). Because the SVG uses `currentColor` and `1em`, it inherits the surrounding element's `color` and `font-size` — no extra CSS needed. Font Awesome was **removed** (no CDN stylesheet is enqueued); to add a new icon, add its Font Awesome 6 free-solid path to the `$icons` map in `skeleton_wp_icon()` rather than reintroducing the font.
+
+### Favicon
+`skeleton_wp_favicon()` in `inc/seo.php` outputs `<link rel="icon">` + `<link rel="apple-touch-icon">` on every page (hooked to `wp_head`), pointing at `images/favicon.png` (a 102×102 square PNG). It is skipped via `has_site_icon()` when a Site Icon is set in the Customizer, so WordPress's own tags take over instead of duplicating.
 
 ### Navigation menus
 Two locations registered: `primary` (header nav) and `footer-links` (footer column 2). If no menu is assigned to `primary`, `skeleton_wp_fallback_menu()` (in `inc/fallback-menu.php`) renders Home + first 5 pages.
