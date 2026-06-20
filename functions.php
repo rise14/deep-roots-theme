@@ -701,14 +701,16 @@ function skeleton_wp_archive_posts_per_page( $query ) {
    publishes a post. Does NOT fire for the admin's own posts.
    ===================================================== */
 
-add_action( 'publish_post', 'skeleton_wp_notify_admin_new_post', 10, 2 );
+add_action( 'transition_post_status', 'skeleton_wp_notify_admin_new_post', 10, 3 );
 
-function skeleton_wp_notify_admin_new_post( $post_id, $post ) {
-    // Only fire on first publish (not on updates to already-published posts).
-    if ( 'publish' !== get_post_status( $post_id ) ) {
+function skeleton_wp_notify_admin_new_post( $new_status, $old_status, $post ) {
+    // Only fire on the first transition into "publish" (not on edits to
+    // already-published posts), and only for regular posts.
+    if ( 'publish' !== $new_status || 'publish' === $old_status || 'post' !== $post->post_type ) {
         return;
     }
 
+    $post_id     = $post->ID;
     $admin_email = get_option( 'admin_email' );
     $author_id   = absint( $post->post_author );
     $author      = get_userdata( $author_id );
