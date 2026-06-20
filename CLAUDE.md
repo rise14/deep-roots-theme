@@ -73,6 +73,9 @@ All custom functions use the `skeleton_wp_` prefix. Key helpers in `functions.ph
 ### Navigation menus
 Two locations registered: `primary` (header nav) and `footer-links` (footer column 2). If no menu is assigned to `primary`, `skeleton_wp_fallback_menu()` (in `inc/fallback-menu.php`) renders Home + first 5 pages.
 
+### New-post admin notification
+`skeleton_wp_notify_admin_new_post()` in `functions.php` emails the site admin (`admin_email`) when a post is published. It hooks `transition_post_status` (NOT `publish_post`) so it can compare old/new status: it fires only on a genuine transition *into* `publish` (`'publish' === $old_status` bails), so editing an already-published post does **not** re-send. It is also limited to the `post` type and is skipped when the author's email matches `admin_email` (so the admin's own posts don't notify them). Uses `wp_mail()`, so actual delivery depends on the server's mail/SMTP config. Do not switch this back to the `publish_post` hook — that fires on every save of a published post and reintroduces duplicate emails.
+
 ## Coding conventions
 
 - Escape all output: `esc_html()`, `esc_url()`, `esc_attr()`, `wp_kses_post()`.
