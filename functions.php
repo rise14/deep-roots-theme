@@ -694,3 +694,54 @@ function skeleton_wp_archive_posts_per_page( $query ) {
         $query->set( 'posts_per_page', 10 );
     }
 }
+
+/* =====================================================
+   NEW POST EMAIL NOTIFICATION
+   Sends an email to the site admin whenever another user
+   publishes a post. Does NOT fire for the admin's own posts.
+   ===================================================== */
+
+add_action( 'publish_post', 'skeleton_wp_notify_admin_new_post', 10, 2 );
+
+function skeleton_wp_notify_admin_new_post( $post_id, $post ) {
+    // Only fire on first publish (not on updates to already-published posts).
+    if ( 'publish' !== get_post_status( $post_id ) ) {
+        return;
+    }
+
+    $admin_email = get_option( 'admin_email' );
+    $author_id   = absint( $post->post_author );
+    $author      = get_userdata( $author_id );
+
+    // Skip if the post author is the admin (same email address).
+    if ( $author && $author->user_email === $admin_email ) {
+        return;
+    }
+
+    $author_name = $author ? $author->display_name : esc_html__( 'Unknown author', 'skeleton-wp' );
+    $post_title  = get_the_title( $post_id );
+    $post_url    = get_permalink( $post_id );
+    $edit_url    = get_edit_post_link( $post_id, 'raw' );
+    $site_name   = get_bloginfo( 'name' );
+
+    $subject = sprintf(
+        /* translators: 1: site name, 2: post title */
+        esc_html__( '[%1$s] New post published: %2$s', 'skeleton-wp' ),
+        $site_name,
+        $post_title
+    );
+
+    $message = sprintf(
+        /* translators: 1: author name, 2: post title, 3: post URL, 4: edit URL */
+        __(
+            "%1\$s just published a new post:\n\n\"%2\$s\"\n\nView: %3\$s\nEdit: %4\$s",
+            'skeleton-wp'
+        ),
+        $author_name,
+        $post_title,
+        $post_url,
+        $edit_url
+    );
+
+    wp_mail( $admin_email, $subject, $message );
+}
