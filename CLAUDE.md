@@ -81,9 +81,9 @@ All SEO meta output lives in `inc/seo.php` (required from `functions.php`) and i
 - **Canonical URL** — self-referencing per context (singular, front/home, category, tag, author). On paginated archives it appends the `/page/N/` segment via `skeleton_wp_add_paged_segment()` so page 2+ don't all canonicalize to page 1.
 - **`noindex, follow`** on search-results pages only.
 - **Meta description** — from excerpt → trimmed content (singular), tagline (front page), term description (category/tag/tax), or author bio.
-- **Open Graph** — `type`, `site_name`, `locale`, `url`, `title`, `description`, `image` (+ `image:alt`, and `image:width`/`height` from the `skeleton-single` size on single posts), plus `article:published_time`/`modified_time` on posts.
+- **Open Graph** — `type`, `site_name`, `locale`, `url`, `title`, `description`, `image` (+ `image:alt`, and `image:width`/`height` from the `skeleton-single` size on single posts). On posts it also emits `article:published_time`/`modified_time`, `article:author` (author archive URL, not a name), `article:section` (first category), and one `article:tag` per post tag. `og:title`/`twitter:title` come from `skeleton_wp_get_page_title()`, which returns a context-specific title (post title, category/tag/author name, archive title) instead of always falling back to the site name.
 - **Twitter Cards** — `summary_large_image` on single posts with a thumbnail, else `summary`.
-- **JSON-LD** — `NewsMediaOrganization` (every page), `NewsArticle` (single posts), and `BreadcrumbList` (mirrors the visible `skeleton_wp_breadcrumbs()` trail). The Organization block hardcodes the publisher name/email/postal address — edit it there if those change.
+- **JSON-LD** — `WebSite` + `SearchAction` (front/home only — enables Google's sitelinks search box, search target is `/?s={search_term_string}`), `NewsMediaOrganization` (every page), `NewsArticle` (single posts), and `BreadcrumbList` (mirrors the visible `skeleton_wp_breadcrumbs()` trail). The Organization block hardcodes the publisher name/email/postal address — edit it there if those change.
 
 SEO-related markup outside `inc/seo.php`:
 - **Front page H1** — a visually-hidden (`screen-reader-text`) `<h1>` with the site name/tagline lives in `header.php` (the logo is the visual brand, but search engines expect a page H1).
