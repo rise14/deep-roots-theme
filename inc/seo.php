@@ -45,6 +45,25 @@ function skeleton_wp_get_page_description() {
 }
 
 /**
+ * Returns a clean page title for the current context (no site-name suffix),
+ * used for og:title / twitter:title. Falls back to the site name.
+ */
+function skeleton_wp_get_page_title() {
+    if ( is_singular() ) {
+        return get_the_title();
+    } elseif ( is_category() ) {
+        return single_cat_title( '', false );
+    } elseif ( is_tag() ) {
+        return single_tag_title( '', false );
+    } elseif ( is_author() ) {
+        return get_the_author_meta( 'display_name', get_queried_object_id() );
+    } elseif ( is_archive() ) {
+        return get_the_archive_title();
+    }
+    return get_bloginfo( 'name' );
+}
+
+/**
  * Returns the best available image URL for the current page.
  */
 function skeleton_wp_get_page_image() {
@@ -169,7 +188,7 @@ function skeleton_wp_open_graph() {
     if ( skeleton_wp_seo_plugin_active() ) return;
 
     $type        = is_singular() ? 'article' : 'website';
-    $title       = is_singular() ? get_the_title() : get_bloginfo( 'name' );
+    $title       = skeleton_wp_get_page_title();
     $description = skeleton_wp_get_page_description();
     $image       = skeleton_wp_get_page_image();
 
@@ -209,10 +228,26 @@ function skeleton_wp_open_graph() {
         }
     }
 
-    // Article-specific timestamps
+    // Article-specific metadata
     if ( 'article' === $type ) {
         echo '<meta property="article:published_time" content="' . esc_attr( get_the_date( 'c' ) ) . '">' . "\n";
         echo '<meta property="article:modified_time" content="' . esc_attr( get_the_modified_date( 'c' ) ) . '">' . "\n";
+
+        // article:author is a profile URL per the OG spec, not a name.
+        $author_id = absint( get_post_field( 'post_author', get_the_ID() ) );
+        echo '<meta property="article:author" content="' . esc_url( get_author_posts_url( $author_id ) ) . '">' . "\n";
+
+        $cats = get_the_category();
+        if ( $cats ) {
+            echo '<meta property="article:section" content="' . esc_attr( $cats[0]->name ) . '">' . "\n";
+        }
+
+        $tags = get_the_tags();
+        if ( $tags ) {
+            foreach ( $tags as $tag ) {
+                echo '<meta property="article:tag" content="' . esc_attr( $tag->name ) . '">' . "\n";
+            }
+        }
     }
 }
 
@@ -224,7 +259,7 @@ add_action( 'wp_head', 'skeleton_wp_twitter_cards', 5 );
 function skeleton_wp_twitter_cards() {
     if ( skeleton_wp_seo_plugin_active() ) return;
 
-    $title       = is_singular() ? get_the_title() : get_bloginfo( 'name' );
+    $title       = skeleton_wp_get_page_title();
     $description = skeleton_wp_get_page_description();
     $image       = skeleton_wp_get_page_image();
     $card        = ( is_singular() && has_post_thumbnail() ) ? 'summary_large_image' : 'summary';
@@ -278,6 +313,36 @@ function skeleton_wp_schema_organization() {
             'addressRegion'   => 'NY',
             'postalCode'      => '10024',
             'addressCountry'  => 'US',
+        ),
+    );
+
+    echo '<script type="application/ld+json">' . "\n";
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+    echo wp_json_encode( $schema, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
+    echo "\n" . '</script>' . "\n";
+}
+
+/* =====================================================
+   JSON-LD: WEBSITE SCHEMA + SEARCHACTION (front page only)
+   Enables Google's sitelinks search box.
+   ===================================================== */
+
+add_action( 'wp_head', 'skeleton_wp_schema_website', 6 );
+function skeleton_wp_schema_website() {
+    if ( ! is_front_page() && ! is_home() ) return;
+
+    $schema = array(
+        '@context'        => 'https://schema.org',
+        '@type'           => 'WebSite',
+        'name'            => get_bloginfo( 'name' ),
+        'url'             => home_url( '/' ),
+        'potentialAction' => array(
+            '@type'       => 'SearchAction',
+            'target'      => array(
+                '@type'       => 'EntryPoint',
+                'urlTemplate' => home_url( '/?s={search_term_string}' ),
+            ),
+            'query-input' => 'required name=search_term_string',
         ),
     );
 
