@@ -436,6 +436,20 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 .entry-tags a, .entry-categories a { background: #f0f0f0; padding: 3px 10px; border-radius: 3px; text-decoration: none; color: #555; font-size: 1.1rem; margin-right: 5px; display: inline-block; }
 .entry-tags a:hover, .entry-categories a:hover { background: var(--c-brown); color: #fff; }
 
+/* --- Contact Page --- */
+.contact-page-content { max-width: 560px; }
+.contact-intro { font-size: 1.7rem; color: #555; margin-bottom: 2.8rem; font-style: italic; border-left: 3px solid var(--c-tan); padding-left: 1.4rem; line-height: 1.7; }
+.contact-form { background: rgba(255,255,255,0.45); border: 1px solid rgba(107,80,64,0.22); border-radius: 8px; padding: 30px 34px; }
+.contact-form-group { margin-bottom: 2rem; }
+.contact-form-group label { display: block; font-size: 1.2rem; font-weight: 700; letter-spacing: 0.07rem; text-transform: uppercase; color: var(--c-ink); margin-bottom: 0.6rem; }
+.contact-form-group input[type="email"],
+.contact-form-group textarea { width: 100%; font-size: 1.5rem; padding: 10px 14px; height: auto; border: 1px solid rgba(107,80,64,0.35); border-radius: 5px; background: rgba(255,255,255,0.75); box-sizing: border-box; transition: border-color 0.2s, box-shadow 0.2s; margin-bottom: 0; }
+.contact-form-group input[type="email"]:focus,
+.contact-form-group textarea:focus { border-color: var(--c-accent); box-shadow: 0 0 0 3px rgba(47,111,106,0.15); outline: 0; }
+.contact-form-group textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
+.contact-submit { background: var(--c-ink); color: #fff; border: none; height: auto; padding: 12px 32px; font-size: 1.35rem; font-weight: 700; letter-spacing: 0.08rem; text-transform: uppercase; border-radius: 5px; cursor: pointer; transition: background 0.2s; margin-bottom: 0; }
+.contact-submit:hover { background: var(--c-brown); color: #fff; }
+
 /* --- Comments --- */
 #comments { margin-top: 40px; padding-top: 30px; border-top: 2px solid #eee; }
 .comments-title { font-size: 2rem; margin-bottom: 25px; }
