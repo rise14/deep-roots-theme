@@ -111,7 +111,7 @@
                     </p>
                     <p>
                         <strong><?php esc_html_e( 'Email:', 'skeleton-wp' ); ?></strong>
-                        <a href="mailto:deeprootsmag@gmail.com">deeprootsmag@gmail.com</a>
+                        <a href="https://deeprootsmag.org/contact/">Contact Us</a>
                     </p>
                 </div>
 
