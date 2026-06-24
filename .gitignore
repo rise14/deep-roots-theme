@@ -1,2 +1,4 @@
 .DS_Store
 {js,css,images}/
+.claude/settings.local.json
+SECURITY-AUDIT.md
