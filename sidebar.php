@@ -17,7 +17,7 @@
          DEEP ROOTS SIDEBAR CONTENT
     =========================== -->
 
-    <!-- Newsletter Subscribe -->
+    <?php /* Newsletter Subscribe — listmonk form disabled
     <section class="widget widget-newsletter">
         <h3 class="widget-title"><?php esc_html_e( 'Subscribe!', 'skeleton-wp' ); ?></h3>
 <form id="listmonk-subscribe-form" novalidate>
@@ -34,6 +34,7 @@
             <div id="listmonk-message" role="alert" aria-live="polite"></div>
         </form>
     </section>
+    */ ?>
 
     <!-- The Bluegrass Special -->
     <section class="widget widget-sidebar-banner">
