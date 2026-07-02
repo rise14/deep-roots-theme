@@ -121,6 +121,13 @@ function skeleton_wp_scripts() {
         get_template_directory_uri() . '/js/slider.js',
         array(), '1.0.0', true );
 
+    // Cloudflare Turnstile — spam protection on the subscribe/contact forms
+    if ( defined( 'TURNSTILE_SITE_KEY' ) ) {
+        wp_enqueue_script( 'cf-turnstile',
+            'https://challenges.cloudflare.com/turnstile/v0/api.js',
+            array(), null, array( 'strategy' => 'async', 'in_footer' => true ) );
+    }
+
     // Comments reply script
     if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
         wp_enqueue_script( 'comment-reply' );
@@ -616,6 +623,82 @@ function skeleton_wp_listmonk_subscribe() {
 }
 
 /* =====================================================
+   CLOUDFLARE TURNSTILE — server-side token verification
+   ===================================================== */
+
+function skeleton_wp_verify_turnstile( $token ) {
+    if ( ! defined( 'TURNSTILE_SECRET_KEY' ) || empty( $token ) ) {
+        return false;
+    }
+
+    $response = wp_remote_post(
+        'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+        array(
+            'body'    => array(
+                'secret'   => TURNSTILE_SECRET_KEY,
+                'response' => $token,
+            ),
+            'timeout' => 10,
+        )
+    );
+
+    if ( is_wp_error( $response ) ) {
+        return false;
+    }
+
+    $body = json_decode( wp_remote_retrieve_body( $response ), true );
+    return ! empty( $body['success'] );
+}
+
+/* =====================================================
+   AJAX: MAILCHIMP NEWSLETTER SUBSCRIBE (Turnstile-gated)
+   The public Mailchimp embed form posts straight to Mailchimp's
+   servers, so Turnstile can't be verified there — this proxies
+   the same POST through WordPress after checking the token.
+   ===================================================== */
+
+add_action( 'wp_ajax_mailchimp_subscribe',        'skeleton_wp_mailchimp_subscribe' );
+add_action( 'wp_ajax_nopriv_mailchimp_subscribe', 'skeleton_wp_mailchimp_subscribe' );
+
+function skeleton_wp_mailchimp_subscribe() {
+    check_ajax_referer( 'skeleton_wp_mailchimp_subscribe', 'mailchimp_nonce' );
+
+    $email = isset( $_POST['EMAIL'] ) ? sanitize_email( wp_unslash( $_POST['EMAIL'] ) ) : '';
+    $token = isset( $_POST['cf-turnstile-response'] ) ? sanitize_text_field( wp_unslash( $_POST['cf-turnstile-response'] ) ) : '';
+
+    if ( ! is_email( $email ) ) {
+        wp_send_json_error( array( 'message' => esc_html__( 'Please enter a valid email address.', 'skeleton-wp' ) ) );
+    }
+
+    if ( ! skeleton_wp_verify_turnstile( $token ) ) {
+        wp_send_json_error( array( 'message' => esc_html__( 'Verification failed. Please try again.', 'skeleton-wp' ) ) );
+    }
+
+    $response = wp_remote_post(
+        'https://deeprootsmag.us11.list-manage.com/subscribe/post?u=e9f5b683830fc066840db426f&id=ba09028be2&f_id=0080aee0f0',
+        array(
+            'body'    => array(
+                'EMAIL'                                          => $email,
+                'b_e9f5b683830fc066840db426f_ba09028be2'          => '',
+            ),
+            'timeout' => 10,
+        )
+    );
+
+    if ( is_wp_error( $response ) ) {
+        wp_send_json_error( array( 'message' => esc_html__( 'Could not reach the mailing list server. Please try again later.', 'skeleton-wp' ) ) );
+    }
+
+    $code = wp_remote_retrieve_response_code( $response );
+
+    if ( $code >= 200 && $code < 400 ) {
+        wp_send_json_success( array( 'message' => esc_html__( 'Thank you! Check your email to confirm your subscription.', 'skeleton-wp' ) ) );
+    } else {
+        wp_send_json_error( array( 'message' => esc_html__( 'Subscription failed. Please try again.', 'skeleton-wp' ) ) );
+    }
+}
+
+/* =====================================================
    NEWSLETTER: INLINE ASSETS
    ===================================================== */
 
@@ -678,6 +761,36 @@ function skeleton_wp_newsletter_assets() {
             .finally(function () {
                 btn.disabled    = false;
                 btn.textContent = "Subscribe";
+            });
+    });
+})();
+(function () {
+    var form = document.getElementById("mc-embedded-subscribe-form");
+    if (!form) return;
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var successEl = document.getElementById("mce-success-response");
+        var errorEl   = document.getElementById("mce-error-response");
+        var btn       = document.getElementById("mc-embedded-subscribe");
+        successEl.style.display = "none";
+        errorEl.style.display   = "none";
+        btn.disabled = true;
+        var data = new FormData(form);
+        fetch(form.action, { method: "POST", body: data })
+            .then(function (r) { return r.json(); })
+            .then(function (res) {
+                var el = res.success ? successEl : errorEl;
+                el.textContent   = res.data.message;
+                el.style.display = "block";
+                if (res.success) { form.reset(); }
+            })
+            .catch(function () {
+                errorEl.textContent   = "An error occurred. Please try again.";
+                errorEl.style.display = "block";
+            })
+            .finally(function () {
+                btn.disabled = false;
+                if (window.turnstile) { turnstile.reset(); }
             });
     });
 })();

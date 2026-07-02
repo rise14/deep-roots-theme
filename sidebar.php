@@ -24,9 +24,14 @@
             #mc_embed_signup{background:#fff;clear:left;font:14px Helvetica,Arial,sans-serif;width:100%;}
         </style>
         <div id="mc_embed_signup">
-            <form action="https://deeprootsmag.us11.list-manage.com/subscribe/post?u=e9f5b683830fc066840db426f&amp;id=ba09028be2&amp;f_id=0080aee0f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+            <form action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate">
+                <input type="hidden" name="action" value="mailchimp_subscribe">
+                <?php wp_nonce_field( 'skeleton_wp_mailchimp_subscribe', 'mailchimp_nonce' ); ?>
                 <div id="mc_embed_signup_scroll"><h2>Subscribe</h2>
                     <div class="mc-field-group"><label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label><input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required value=""></div>
+                    <?php if ( defined( 'TURNSTILE_SITE_KEY' ) ) : ?>
+                        <div class="cf-turnstile" data-sitekey="<?php echo esc_attr( TURNSTILE_SITE_KEY ); ?>"></div>
+                    <?php endif; ?>
                     <div id="mce-responses" class="clear">
                         <div class="response" id="mce-error-response" style="display:none;"></div>
                         <div class="response" id="mce-success-response" style="display:none;"></div>
