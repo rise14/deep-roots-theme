@@ -661,7 +661,9 @@ add_action( 'wp_ajax_mailchimp_subscribe',        'skeleton_wp_mailchimp_subscri
 add_action( 'wp_ajax_nopriv_mailchimp_subscribe', 'skeleton_wp_mailchimp_subscribe' );
 
 function skeleton_wp_mailchimp_subscribe() {
-    check_ajax_referer( 'skeleton_wp_mailchimp_subscribe', 'mailchimp_nonce' );
+    if ( ! check_ajax_referer( 'skeleton_wp_mailchimp_subscribe', 'mailchimp_nonce', false ) ) {
+        wp_send_json_error( array( 'message' => esc_html__( 'Your session expired. Please reload the page and try again.', 'skeleton-wp' ) ) );
+    }
 
     $email = isset( $_POST['EMAIL'] ) ? sanitize_email( wp_unslash( $_POST['EMAIL'] ) ) : '';
     $token = isset( $_POST['cf-turnstile-response'] ) ? sanitize_text_field( wp_unslash( $_POST['cf-turnstile-response'] ) ) : '';
@@ -777,14 +779,22 @@ function skeleton_wp_newsletter_assets() {
         btn.disabled = true;
         var data = new FormData(form);
         fetch(form.action, { method: "POST", body: data })
-            .then(function (r) { return r.json(); })
-            .then(function (res) {
+            .then(function (r) { return r.text(); })
+            .then(function (text) {
+                var res;
+                try {
+                    res = JSON.parse(text);
+                } catch (e) {
+                    console.error("Mailchimp subscribe: non-JSON response from server:", text);
+                    throw e;
+                }
                 var el = res.success ? successEl : errorEl;
                 el.textContent   = res.data.message;
                 el.style.display = "block";
                 if (res.success) { form.reset(); }
             })
-            .catch(function () {
+            .catch(function (err) {
+                console.error("Mailchimp subscribe failed:", err);
                 errorEl.textContent   = "An error occurred. Please try again.";
                 errorEl.style.display = "block";
             })
