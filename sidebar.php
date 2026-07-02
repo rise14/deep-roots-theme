@@ -17,7 +17,7 @@
          DEEP ROOTS SIDEBAR CONTENT
     =========================== -->
 
-    <!-- Mailchimp Subscribe -->
+    <?php /* Mailchimp Subscribe — disabled pending admin-ajax redirect fix
     <section class="widget widget-newsletter">
         <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
         <style type="text/css">
@@ -42,6 +42,7 @@
             </form>
         </div>
     </section>
+    */ ?>
 
     <?php /* Newsletter Subscribe — listmonk form disabled
     <section class="widget widget-newsletter">
