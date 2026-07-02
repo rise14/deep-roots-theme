@@ -45,6 +45,9 @@ get_header();
                             required
                         ></textarea>
                     </div>
+                    <?php if ( defined( 'TURNSTILE_SITE_KEY' ) ) : ?>
+                        <div class="cf-turnstile" data-sitekey="<?php echo esc_attr( TURNSTILE_SITE_KEY ); ?>"></div>
+                    <?php endif; ?>
                     <button type="submit" class="contact-submit">
                         <?php esc_html_e( 'Send Message', 'skeleton-wp' ); ?>
                     </button>
