@@ -2,3 +2,5 @@
 {js,css,images}/
 .claude/settings.local.json
 SECURITY-AUDIT.md
+AGENTS.md
+CLAUDE.md
