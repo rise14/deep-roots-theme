@@ -49,7 +49,7 @@ get_header();
 
                 <div class="post-card-body">
                     <h2 class="post-card-title"><a href="<?php the_permalink(); ?>"><?php echo esc_html( get_the_title() ); ?></a></h2>
-                    <div class="post-card-excerpt"><?php skeleton_wp_excerpt( 18 ); ?></div>
+                    <div class="post-card-excerpt"><?php skeleton_wp_excerpt( 45 ); ?></div>
                     <div class="post-card-footer">
                         <a class="post-card-readmore" href="<?php the_permalink(); ?>">
                             <?php esc_html_e( 'Read More', 'skeleton-wp' ); ?> <?php echo skeleton_wp_icon( 'arrow-right' ); ?>

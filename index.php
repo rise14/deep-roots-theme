@@ -54,7 +54,7 @@ get_header();
 
                         <!-- Excerpt -->
                         <div class="post-card-excerpt">
-                            <?php skeleton_wp_excerpt( 18 ); ?>
+                            <?php skeleton_wp_excerpt( 45 ); ?>
                         </div>
 
                         <!-- Footer -->
