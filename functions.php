@@ -214,8 +214,8 @@ function skeleton_wp_get_slider_posts( $count = 5 ) {
  * Prints the post excerpt, falling back to a trimmed content.
  */
 function skeleton_wp_excerpt( $length = 18 ) {
-    $excerpt = get_the_excerpt();
-    if ( empty( $excerpt ) ) {
+    if ( ! has_excerpt() ) {
+        // ponytail: trim from raw content — get_the_excerpt() is pre-capped at 20 words by the excerpt_length filter below
         $excerpt = get_the_content();
         $excerpt = strip_shortcodes( $excerpt );
         $excerpt = wp_strip_all_tags( $excerpt );
@@ -225,7 +225,8 @@ function skeleton_wp_excerpt( $length = 18 ) {
             $excerpt = implode( ' ', $words ) . '&hellip;';
         }
     } else {
-        $words = explode( ' ', $excerpt, $length + 1 );
+        $excerpt = get_the_excerpt();
+        $words   = explode( ' ', $excerpt, $length + 1 );
         if ( count( $words ) > $length ) {
             array_pop( $words );
             $excerpt = implode( ' ', $words ) . '&hellip;';
