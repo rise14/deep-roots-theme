@@ -73,7 +73,7 @@ $grid_query = new WP_Query( array(
                             </h2>
 
                             <div class="post-card-excerpt">
-                                <?php skeleton_wp_excerpt( 18 ); ?>
+                                <?php skeleton_wp_excerpt( 45 ); ?>
                             </div>
 
                             <div class="post-card-footer">
