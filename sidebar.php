@@ -74,6 +74,8 @@
         </p>
     </section>
 
+    <br />
+
     <!-- Panthera -->
     <section class="widget widget-sidebar-banner">
         <a href="http://www.panthera.org" target="_blank" rel="noopener noreferrer">
@@ -83,6 +85,8 @@
         </a>
     </section>
 
+    <br />
+
     <!-- Save The Manatee -->
     <section class="widget widget-sidebar-banner">
         <a href="http://www.savethemanatee.org" target="_blank" rel="noopener noreferrer">
@@ -91,6 +95,8 @@
                  style="width:100%;height:auto;display:block;" />
         </a>
     </section>
+
+    <br />
 
     <!-- Matthew Shepard Foundation -->
     <section class="widget widget-sidebar-banner">
