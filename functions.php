@@ -785,7 +785,7 @@ function skeleton_wp_newsletter_assets() {
         errorEl.style.display   = "none";
         btn.disabled = true;
         var data = new FormData(form);
-        fetch(form.action, { method: "POST", body: data })
+        fetch(skeletonWP.ajaxUrl, { method: "POST", body: data })
             .then(function (r) { return r.text(); })
             .then(function (text) {
                 var res;
