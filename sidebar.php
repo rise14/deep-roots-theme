@@ -29,7 +29,7 @@
                 <div id="mc_embed_signup_scroll"><h2>Subscribe</h2>
                     <div class="mc-field-group"><label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label><input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required value=""></div>
                     <?php if ( defined( 'TURNSTILE_SITE_KEY' ) ) : ?>
-                        <div class="cf-turnstile" data-sitekey="<?php echo esc_attr( TURNSTILE_SITE_KEY ); ?>"></div>
+                        <div class="cf-turnstile" data-sitekey="<?php echo esc_attr( TURNSTILE_SITE_KEY ); ?>" data-size="flexible"></div>
                     <?php endif; ?>
                     <div id="mce-responses" class="clear">
                         <div class="response" id="mce-error-response" style="display:none;"></div>
