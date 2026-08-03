@@ -249,11 +249,17 @@ function skeleton_wp_post_meta( $show_cat = true ) {
     printf( '<span class="meta-date">%s</span>', esc_html( get_the_date() ) );
 
     if ( $author_name ) {
-        printf( ' <span class="meta-author">%s <a href="%s">%s</a></span>',
+        $byline = sprintf( '%s <a href="%s">%s</a>',
             esc_html__( 'by', 'skeleton-wp' ),
             esc_url( $author_url ),
             esc_html( $author_name )
         );
+        // ponytail: h3 only for David McGee per explicit request — other authors keep the inline span.
+        if ( 'David McGee' === $author_name ) {
+            printf( ' <h3 class="meta-author">%s</h3>', $byline );
+        } else {
+            printf( ' <span class="meta-author">%s</span>', $byline );
+        }
     }
 
     if ( $show_cat && $primary ) {

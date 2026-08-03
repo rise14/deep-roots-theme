@@ -20,10 +20,11 @@ get_header();
                 <?php
                 // WP Subtitle plugin output; no-ops when the plugin is inactive.
                 do_action( 'plugins/wp_subtitle/the_subtitle', array(
-                    'before' => '<p class="entry-subtitle">',
-                    'after'  => '</p>',
+                    'before' => '<h2 class="entry-subtitle">',
+                    'after'  => '</h2>',
                 ) );
                 ?>
+                <?php skeleton_wp_post_meta(); ?>
             </header>
 
             <div class="entry-content">
