@@ -776,13 +776,23 @@ function skeleton_wp_newsletter_assets() {
 (function () {
     var form = document.getElementById("mc-embedded-subscribe-form");
     if (!form) return;
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var successEl = document.getElementById("mce-success-response");
-        var errorEl   = document.getElementById("mce-error-response");
-        var btn       = document.getElementById("mc-embedded-subscribe");
+    var successEl = document.getElementById("mce-success-response");
+    var errorEl   = document.getElementById("mce-error-response");
+    window.addEventListener("pageshow", function () {
         successEl.style.display = "none";
         errorEl.style.display   = "none";
+    });
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var btn = document.getElementById("mc-embedded-subscribe");
+        successEl.style.display = "none";
+        errorEl.style.display   = "none";
+        var email = document.getElementById("mce-EMAIL").value.trim();
+        if (!email) {
+            errorEl.textContent   = "Please enter your email address.";
+            errorEl.style.display = "block";
+            return;
+        }
         btn.disabled = true;
         var data = new FormData(form);
         fetch(skeletonWP.ajaxUrl, { method: "POST", body: data })
