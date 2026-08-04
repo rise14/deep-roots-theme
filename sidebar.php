@@ -17,6 +17,10 @@
          DEEP ROOTS SIDEBAR CONTENT
     =========================== -->
 
+    <section class="widget widget-newsletter">
+        <?php echo do_shortcode( '[mc4wp_form id="20854"]' ); ?>
+    </section>
+
     <?php /* Newsletter Subscribe — mailchimp form disabled, replaced by plugin
     <section class="widget widget-newsletter">
         <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
