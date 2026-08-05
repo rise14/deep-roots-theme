@@ -773,54 +773,6 @@ function skeleton_wp_newsletter_assets() {
             });
     });
 })();
-(function () {
-    var form = document.getElementById("mc-embedded-subscribe-form");
-    if (!form) return;
-    var successEl = document.getElementById("mce-success-response");
-    var errorEl   = document.getElementById("mce-error-response");
-    window.addEventListener("pageshow", function () {
-        successEl.style.display = "none";
-        errorEl.style.display   = "none";
-    });
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var btn = document.getElementById("mc-embedded-subscribe");
-        successEl.style.display = "none";
-        errorEl.style.display   = "none";
-        var email = document.getElementById("mce-EMAIL").value.trim();
-        if (!email) {
-            errorEl.textContent   = "Please enter your email address.";
-            errorEl.style.display = "block";
-            return;
-        }
-        btn.disabled = true;
-        var data = new FormData(form);
-        fetch(skeletonWP.ajaxUrl, { method: "POST", body: data })
-            .then(function (r) { return r.text(); })
-            .then(function (text) {
-                var res;
-                try {
-                    res = JSON.parse(text);
-                } catch (e) {
-                    console.error("Mailchimp subscribe: non-JSON response from server:", text);
-                    throw e;
-                }
-                var el = res.success ? successEl : errorEl;
-                el.textContent   = res.data.message;
-                el.style.display = "block";
-                if (res.success) { form.reset(); }
-            })
-            .catch(function (err) {
-                console.error("Mailchimp subscribe failed:", err);
-                errorEl.textContent   = "An error occurred. Please try again.";
-                errorEl.style.display = "block";
-            })
-            .finally(function () {
-                btn.disabled = false;
-                if (window.turnstile) { turnstile.reset(); }
-            });
-    });
-})();
 ';
     wp_add_inline_script( 'skeleton-wp-slider', $js );
 }
