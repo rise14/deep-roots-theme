@@ -75,7 +75,7 @@
                         <?php while ( $recent->have_posts() ) : $recent->the_post(); ?>
                             <li>
                                 <a href="<?php the_permalink(); ?>"><?php echo esc_html( get_the_title() ); ?></a>
-                                <span style="display:block;font-size:1.1rem;color:#666;margin-top:3px;">
+                                <span class="footer-post-date">
                                     <?php echo esc_html( get_the_date() ); ?>
                                 </span>
                             </li>

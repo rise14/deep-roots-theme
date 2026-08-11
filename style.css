@@ -390,6 +390,10 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 }
 .post-card-meta a { color: #999; text-decoration: none; }
 .post-card-meta a:hover { color: var(--c-brown); }
+/* Footer "Recent Posts" widget date — hidden visually, kept in the DOM for crawlers/screen readers. */
+.footer-post-date {
+  display: none;
+}
 .post-card-title {
   font-size: 1.6rem; font-weight: 700; line-height: 1.35; margin-bottom: 8px;
 }
