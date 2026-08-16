@@ -505,19 +505,39 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 }
 .widget-search button:hover { background: var(--c-brown); border-color: var(--c-brown); }
 
-/* Newsletter Widget (mc4wp) */
+/* Newsletter Widget (mc4wp)
+   Rules here are viewport-independent (no @media) and reset typography
+   explicitly so the form matches the theme identically on every screen
+   size, regardless of the mc4wp plugin's own default form styling. */
+.widget-newsletter .mc4wp-form,
+.widget-newsletter .mc4wp-form-fields {
+  font-family: 'Raleway', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #222; font-size: 1.3rem; line-height: 1.6;
+}
 .widget-newsletter .mc4wp-form-fields p { margin: 0 0 10px; }
-.widget-newsletter .mc4wp-form input[type="email"] {
-  width: 100%; height: 40px; padding: 0 12px; font-size: 1.3rem;
-  border: 1px solid var(--c-brown-soft); border-radius: 4px;
+.widget-newsletter .mc4wp-form-fields label {
+  display: block; font-size: 1.2rem; font-weight: 600; letter-spacing: normal;
+  text-transform: none; color: var(--c-ink); margin-bottom: 4px;
+}
+.widget-newsletter .mc4wp-form input[type="email"],
+.widget-newsletter .mc4wp-form input[type="text"] {
+  display: block; width: 100%; height: 40px; margin: 0; padding: 0 12px;
+  font-family: inherit; font-size: 1.3rem; font-weight: 400; color: #222;
+  background-color: #fff; border: 1px solid var(--c-brown-soft); border-radius: 4px;
+  box-sizing: border-box;
 }
 .widget-newsletter .mc4wp-form input[type="submit"] {
-  width: 100%; height: 40px; margin: 0; padding: 0 16px;
+  display: block; width: 100%; height: 40px; margin: 0; padding: 0 16px;
   background: var(--c-ink); color: #fff; border: 1px solid var(--c-ink);
-  border-radius: 4px; font-size: 1.3rem; cursor: pointer;
+  border-radius: 4px; font-family: inherit; font-size: 1.3rem; font-weight: 400;
+  line-height: 40px; text-transform: none; letter-spacing: normal; white-space: normal;
+  cursor: pointer; box-sizing: border-box;
 }
 .widget-newsletter .mc4wp-form input[type="submit"]:hover { background: var(--c-brown); border-color: var(--c-brown); }
-.widget-newsletter .mc4wp-alert { margin-top: 10px; padding: 8px 12px; border-radius: 4px; font-size: 1.2rem; }
+.widget-newsletter .mc4wp-alert {
+  margin-top: 10px; padding: 8px 12px; border-radius: 4px;
+  font-family: inherit; font-size: 1.2rem; line-height: 1.5;
+}
 .widget-newsletter .mc4wp-alert-success { background: rgba(47,111,106,0.12); color: var(--c-accent-dk); }
 .widget-newsletter .mc4wp-alert-error { background: rgba(180,60,50,0.12); color: #a63c32; }
 
