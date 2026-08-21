@@ -1,0 +1,17 @@
+#login h1 {
+    display: flex !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+#login h1 a {
+    background-image: url("https://deeprootsmag.org/wp-content/themes/deep-roots-theme/images/admin_logo.png") !important;
+    background-size: 480px 108px !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    width: 480px !important;
+    height: 108px !important;
+    flex-shrink: 0 !important;
+    display: block !important;
+    margin: 0 0 25px !important;
+}
