@@ -432,6 +432,7 @@ pre, blockquote, dl, figure, table, p, ul, ol, form { margin-bottom: 2.5rem; }
 .entry-meta a:hover { color: var(--c-brown); }
 .entry-meta span { margin-right: 15px; }
 .entry-content { font-size: 1.6rem; line-height: 1.8; color: #333; }
+.entry-content h1, .entry-content h2 { text-align: center; }
 .entry-content p { margin-bottom: 2rem; }
 .entry-thumbnail { margin-bottom: 25px; }
 .entry-thumbnail img { width: 100%; height: auto; border-radius: 6px; }
