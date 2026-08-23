@@ -173,7 +173,7 @@
                                                 document.getElementById('sib-captcha').dispatchEvent(event);
                                             }
                                         </script>
-                                        <div class="g-recaptcha sib-visible-recaptcha" id="sib-captcha" data-sitekey="6Ld2GZQtAAAAAKkFVmfjMhfii4AvachXs-tI6A4M" data-callback="handleCaptchaResponse" style="direction:ltr"></div>
+                                        <div class="g-recaptcha sib-visible-recaptcha" id="sib-captcha" data-sitekey="6Ld2GZQtAAAAAKkFVmfjMhfii4AvachXs-tI6A4M" data-callback="handleCaptchaResponse" data-size="compact" style="direction:ltr"></div>
                                     </div>
                                     <label class="entry__error entry__error--primary" style="font-family:Helvetica, sans-serif; font-size:16px; text-align:left; color:#661d1d; background-color:#ffeded; border-color:#ff4949; border-radius:3px;">
                                     </label>
