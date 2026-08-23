@@ -118,7 +118,7 @@
                     <form id="sib-form" method="POST" action="https://f2e41c68.sibforms.com/serve/MUIFAGBZV5IrOJt7IfcPj-3pVhV5h5TKPGa9glW1lYkS4SoYvnRq3AlGLp9Bxam_dLMNNuMD1epRX25aHVAoRy952zJs51wU7I5Tgo8Gnu26RG0dehwfZtyFp6L797wgvGOdlRxBkcXg1BQNYhTykkY00VdiOme7-r5yRjd01xGDvtNJUcnkZCoVk86gNjY_h6KsERmCgIChCoPlcw==" data-type="subscription">
 
                         <div style="padding: 8px 0;">
-                            <div class="sib-form-block" style="font-family:Helvetica, sans-serif; font-size:32px; font-weight:700; text-align:left; color:#3C4858; background-color:transparent; text-align:left">
+                            <div class="sib-form-block" style="font-family:Helvetica, sans-serif; font-size:22px; font-weight:700; text-align:left; color:#3C4858; background-color:transparent; text-align:left">
                                 <p>Newsletter</p>
                             </div>
                         </div>
