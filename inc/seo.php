@@ -37,8 +37,28 @@ function skeleton_wp_get_page_description() {
         $description = get_bloginfo( 'description' );
     } elseif ( is_category() || is_tag() || is_tax() ) {
         $description = wp_strip_all_tags( term_description() );
+        if ( empty( $description ) ) {
+            $description = sprintf(
+                /* translators: 1: term name, 2: site name */
+                __( '%1$s articles from %2$s.', 'skeleton-wp' ),
+                single_term_title( '', false ),
+                get_bloginfo( 'name' )
+            );
+        }
     } elseif ( is_author() ) {
         $description = get_the_author_meta( 'description', get_queried_object_id() );
+        if ( empty( $description ) ) {
+            $description = sprintf(
+                /* translators: 1: author name, 2: site name */
+                __( 'Articles by %1$s at %2$s.', 'skeleton-wp' ),
+                get_the_author_meta( 'display_name', get_queried_object_id() ),
+                get_bloginfo( 'name' )
+            );
+        }
+    }
+
+    if ( empty( $description ) && is_singular() ) {
+        $description = get_bloginfo( 'description' );
     }
 
     return wp_strip_all_tags( wp_trim_words( $description, 30, '' ) );
@@ -363,6 +383,9 @@ function skeleton_wp_schema_article() {
     $post_id    = get_the_ID();
     $author_id  = absint( get_post_field( 'post_author', $post_id ) );
     $image_url  = get_the_post_thumbnail_url( $post_id, 'skeleton-single' );
+    if ( ! $image_url ) {
+        $image_url = skeleton_wp_get_page_image();
+    }
 
     $logo_url       = '';
     $custom_logo_id = get_theme_mod( 'custom_logo' );
