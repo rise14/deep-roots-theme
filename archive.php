@@ -63,8 +63,8 @@ get_header();
 
             <div class="posts-pagination">
                 <?php the_posts_pagination( array(
-                    'prev_text' => skeleton_wp_icon( 'chevron-left' ),
-                    'next_text' => skeleton_wp_icon( 'chevron-right' ),
+                    'prev_text' => skeleton_wp_icon( 'chevron-left' ) . '<span class="screen-reader-text">' . esc_html__( 'Previous', 'skeleton-wp' ) . '</span>',
+                    'next_text' => skeleton_wp_icon( 'chevron-right' ) . '<span class="screen-reader-text">' . esc_html__( 'Next', 'skeleton-wp' ) . '</span>',
                 ) ); ?>
             </div>
 

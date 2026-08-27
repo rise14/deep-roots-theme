@@ -101,8 +101,8 @@ $grid_query = new WP_Query( array(
                     echo paginate_links( array(
                         'total'     => $grid_query->max_num_pages,
                         'current'   => max( 1, get_query_var( 'paged' ) ),
-                        'prev_text' => skeleton_wp_icon( 'chevron-left' ),
-                        'next_text' => skeleton_wp_icon( 'chevron-right' ),
+                        'prev_text' => skeleton_wp_icon( 'chevron-left' ) . '<span class="screen-reader-text">' . esc_html__( 'Previous', 'skeleton-wp' ) . '</span>',
+                        'next_text' => skeleton_wp_icon( 'chevron-right' ) . '<span class="screen-reader-text">' . esc_html__( 'Next', 'skeleton-wp' ) . '</span>',
                     ) );
                     ?>
                 </div>
