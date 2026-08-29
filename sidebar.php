@@ -7,7 +7,7 @@
  */
 ?>
 
-<aside id="secondary" class="widget-area" role="complementary" aria-label="<?php esc_attr_e( 'Sidebar', 'skeleton-wp' ); ?>">
+<aside id="secondary" class="widget-area" aria-label="<?php esc_attr_e( 'Sidebar', 'skeleton-wp' ); ?>">
 
     <?php if ( is_active_sidebar( 'sidebar-main' ) ) : ?>
         <?php dynamic_sidebar( 'sidebar-main' ); ?>
@@ -23,64 +23,9 @@
     </section>
     */ ?>
 
-    <section class="widget widget-newsletter">
+    <div class="widget widget-newsletter">
         <!-- Begin Brevo Form -->
 
-        <style>
-            @font-face {
-                font-display: block;
-                font-family: Roboto;
-                src: url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/7529907e9eaf8ebb5220c5f9850e3811.woff2) format("woff2"), url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/25c678feafdc175a70922a116c9be3e7.woff) format("woff")
-            }
-
-            @font-face {
-                font-display: fallback;
-                font-family: Roboto;
-                font-weight: 600;
-                src: url(https://assets.brevo.com/font/Roboto/Latin/medium/normal/6e9caeeafb1f3491be3e32744bc30440.woff2) format("woff2"), url(https://assets.brevo.com/font/Roboto/Latin/medium/normal/71501f0d8d5aa95960f6475d5487d4c2.woff) format("woff")
-            }
-
-            @font-face {
-                font-display: fallback;
-                font-family: Roboto;
-                font-weight: 700;
-                src: url(https://assets.brevo.com/font/Roboto/Latin/bold/normal/3ef7cf158f310cf752d5ad08cd0e7e60.woff2) format("woff2"), url(https://assets.brevo.com/font/Roboto/Latin/bold/normal/ece3a1d82f18b60bcce0211725c476aa.woff) format("woff")
-            }
-
-            :where(.sib-form-message-panel) {
-                display: none;
-            }
-
-            :where(.sib-form-message-panel .sib-notification__icon) {
-                width: 20px;
-                height: 20px;
-            }
-
-
-            #sib-container input:-ms-input-placeholder {
-                font-family: Helvetica, sans-serif;
-                text-align: left;
-                color: #c0ccda;
-            }
-
-            #sib-container input::placeholder {
-                font-family: Helvetica, sans-serif;
-                text-align: left;
-                color: #c0ccda;
-            }
-
-            #sib-container textarea::placeholder {
-                font-family: Helvetica, sans-serif;
-                text-align: left;
-                color: #c0ccda;
-            }
-
-
-            #sib-container a {
-                text-decoration: underline;
-                color: #2BB2FC;
-            }
-        </style>
         <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
 
         <div class="sib-form" style="text-align: center;
@@ -138,7 +83,7 @@
                                         <label class="entry__label" style="font-weight: 700; text-align: left; font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; text-align:left; color:#3c4858;" for="EMAIL" data-required="*">Enter your email address to subscribe</label>
 
                                         <div class="entry__field">
-                                            <input class="input " type="text" id="EMAIL" name="EMAIL" autocomplete="off" value="" placeholder="EMAIL" data-required="true" required />
+                                            <input class="input " type="text" id="EMAIL" name="EMAIL" autocomplete="off" value="" placeholder="EMAIL" data-required="true" required>
                                         </div>
                                     </div>
 
@@ -205,7 +150,7 @@
         <script src="https://www.google.com/recaptcha/api.js?render=6Ld2GZQtAAAAAKkFVmfjMhfii4AvachXs-tI6A4M&hl=en" async defer></script>
 
         <!-- End Brevo Form -->
-    </section>
+    </div>
 
     <?php /* Newsletter Subscribe — mailchimp form disabled, replaced by plugin
     <section class="widget widget-newsletter">
@@ -254,49 +199,49 @@
     */ ?>
 
     <!-- The Bluegrass Special -->
-    <section class="widget widget-sidebar-banner">
+    <div class="widget widget-sidebar-banner">
         <a href="http://www.thebluegrassspecial.com/archive/2013/december2013/indexdecember2013.html"
            target="_blank" rel="noopener noreferrer">
             <img src="https://deeprootsmag.org/sidebar/indexdecember2013thumb.jpeg"
                  alt="The Bluegrass Special"
-                 style="width:100%;height:auto;display:block;" />
+                 style="width:100%;height:auto;display:block;">
         </a>
         <p style="font-size:1.1rem;line-height:1.5;margin-top:6px;">
             Before Deep Roots existed, it was TheBluegrassSpecial.com, from April 2008 through July 2012.
         </p>
-    </section>
+    </div>
 
-    <br />
+    <br>
 
     <!-- Panthera -->
-    <section class="widget widget-sidebar-banner">
+    <div class="widget widget-sidebar-banner">
         <a href="http://www.panthera.org" target="_blank" rel="noopener noreferrer">
             <img src="https://deeprootsmag.org/sidebar/panthera-logo.jpg"
                  alt="Panthera"
-                 style="width:100%;height:auto;display:block;" />
+                 style="width:100%;height:auto;display:block;">
         </a>
-    </section>
+    </div>
 
-    <br />
+    <br>
 
     <!-- Save The Manatee -->
-    <section class="widget widget-sidebar-banner">
+    <div class="widget widget-sidebar-banner">
         <a href="http://www.savethemanatee.org" target="_blank" rel="noopener noreferrer">
             <img src="https://deeprootsmag.org/sidebar/manatee-holiday.jpg"
                  alt="Save The Manatee"
-                 style="width:100%;height:auto;display:block;" />
+                 style="width:100%;height:auto;display:block;">
         </a>
-    </section>
+    </div>
 
-    <br />
+    <br>
 
     <!-- Matthew Shepard Foundation -->
-    <section class="widget widget-sidebar-banner">
+    <div class="widget widget-sidebar-banner">
         <a href="https://www.matthewshepard.org/" target="_blank" rel="noopener noreferrer">
             <img src="https://deeprootsmag.org/sidebar/shepard-vert-banner.jpg"
                  alt="Matthew Shepard Foundation"
-                 style="width:100%;height:auto;display:block;" />
+                 style="width:100%;height:auto;display:block;">
         </a>
-    </section>
+    </div>
 
 </aside><!-- /#secondary -->

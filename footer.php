@@ -6,7 +6,7 @@
     <!-- ==========================================
          FOOTER
     ========================================== -->
-    <footer id="colophon" class="site-footer" role="contentinfo">
+    <footer id="colophon" class="site-footer">
 
         <!-- Footer Widgets (3 columns) -->
         <?php if ( is_active_sidebar( 'footer-1' ) || is_active_sidebar( 'footer-2' ) || is_active_sidebar( 'footer-3' ) ) : ?>

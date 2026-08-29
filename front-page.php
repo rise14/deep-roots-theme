@@ -35,11 +35,8 @@ $grid_query = new WP_Query( array(
 ) );
 ?>
 
-<div class="container">
-    <div id="content-area" class="clearfix" style="padding-top:40px;">
-
-        <div id="primary" class="content-area">
-            <main id="main" class="site-main" role="main">
+<div id="primary" class="content-area" style="padding-top:40px;">
+    <main id="main" class="site-main">
 
                 <?php if ( $grid_query->have_posts() ) : ?>
 
@@ -111,12 +108,9 @@ $grid_query = new WP_Query( array(
                     <p style="color:#999;"><?php esc_html_e( 'No posts found. Start publishing!', 'skeleton-wp' ); ?></p>
                 <?php endif; ?>
 
-            </main>
-        </div><!-- /#primary -->
+    </main>
+</div><!-- /#primary -->
 
-        <?php get_sidebar(); ?>
-
-    </div><!-- /#content-area -->
-</div><!-- /.container -->
+<?php get_sidebar(); ?>
 
 <?php get_footer(); ?>

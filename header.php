@@ -34,7 +34,7 @@
     <!-- ==========================================
          HEADER / LOGO
     ========================================== -->
-    <header id="masthead" class="site-header" role="banner">
+    <header id="masthead" class="site-header">
         <div class="container">
 
             <!-- LOGO / BRANDING -->
@@ -50,7 +50,7 @@
                                  alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>"
                                  width="960"
                                  height="216"
-                                 class="site-logo" />
+                                 class="site-logo">
                         </a>
                         <?php
                         $description = get_bloginfo( 'description', 'display' );
@@ -63,7 +63,7 @@
             </div><!-- /.site-branding -->
 
             <!-- PRIMARY NAVIGATION -->
-            <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Primary Menu', 'skeleton-wp' ); ?>">
+            <nav id="site-navigation" class="main-navigation" aria-label="<?php esc_attr_e( 'Primary Menu', 'skeleton-wp' ); ?>">
                 <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
                     <?php echo skeleton_wp_icon( 'bars' ); ?>
                     <span class="screen-reader-text"><?php esc_html_e( 'Menu', 'skeleton-wp' ); ?></span>
